@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Buji</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+<link href="//dn-staticfile.qbox.me/twitter-bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<script src="//dn-staticfile.qbox.me/jquery/1.11.3/jquery.min.js"></script>
+<script src="//dn-staticfile.qbox.me/jquery-ujs/1.1.0/rails.min.js"></script>
+<script src="//dn-staticfile.qbox.me/twitter-bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<%= stylesheet_link_tag    'application', media: 'all' %>
+<%= javascript_include_tag 'application' %>
+<%= csrf_meta_tags %>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <a href="/"><%= image_tag 'logo', width: 90, height: 50 %></a>
+      <% if user_signed_in? %>
+        <%= current_user.email %>
+        <%= form_tag destroy_user_session_path, method: :delete, style: 'display: inline' do %><%= submit_tag '退出', class: 'btn-link' %><% end %>
+      <% else %>
+        <%= link_to "登录", new_user_session_path %>
+        <%= link_to "注册", new_user_registration_path %>
+      <% end %>
+    </div>
+    <%= yield %>
+  </div>
+</body>
+</html>

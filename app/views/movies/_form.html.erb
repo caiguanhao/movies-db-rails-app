@@ -1,0 +1,7 @@
+<%= bootstrap_form_for(@movie) do |f| %>
+  <%= f.text_field :name %>
+  <%= f.text_field :alias %>
+  <%= f.number_field :year %>
+  <%= f.text_area :content %>
+  <%= f.submit %>
+<% end %>

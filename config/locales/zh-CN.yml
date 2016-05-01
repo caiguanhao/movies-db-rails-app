@@ -1,0 +1,21 @@
+zh-CN:
+  activerecord:
+    models:
+      cinema: "影院"
+      movie: "电影"
+      user: "用户"
+    attributes:
+      cinema:
+        name: "影院名"
+        city: "影院所在城市"
+        content: "影院介绍"
+      movie:
+        name: "电影名"
+        alias: "英文名"
+        year: "年份"
+        content: "电影介绍"
+      user:
+        email: "E-mail"
+        password: "密码"
+        password_confirmation: "重输密码"
+        remember_me: "保持登录状态"

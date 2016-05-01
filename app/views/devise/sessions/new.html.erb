@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <h2>登录</h2>
+    <%= bootstrap_form_for resource, as: resource_name, url: session_path(resource_name), layout: :horizontal do |f| %>
+      <%= f.email_field :email, autofocus: true %>
+      <%= f.password_field :password, autocomplete: "off" %>
+      <% if devise_mapping.rememberable? -%>
+        <%= f.form_group do %>
+          <%= f.check_box :remember_me %>
+        <% end %>
+      <% end -%>
+      <%= f.form_group do %>
+        <%= f.submit "登录" %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

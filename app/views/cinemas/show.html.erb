@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+
+<div class="row">
+  <div class="col-sm-6">
+    <h2><%= @cinema.name %></h2>
+    <small><%= @cinema.city %></small>
+  </div>
+  <div class="col-sm-6">
+    <%= simple_format @cinema.content %>
+  </div>
+</div>
+
+<ul class="nav nav-tabs">
+  <% @dates.each do |date| %>
+    <li><a href="#date-<%= date %>" data-toggle="tab"><%= date %></a></li>
+  <% end %>
+</ul>
+
+<div class="tab-content">
+  <% @dates.each.with_index do |date, i| %>
+    <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>">
+
+      <% movies = @cinema.timetables.where(date: date).group(:movie_id) %>
+
+      <ul class="nav nav-tabs">
+        <% movies.each.with_index do |tt, i| %>
+          <li class="<%= i == 0 && ' active' || '' %>"><a href="#date-<%= date %>-<%= tt.movie.id %>" data-toggle="tab"><%= tt.movie.name %></a></li>
+        <% end %>
+      </ul>
+
+
+      <div class="tab-content">
+        <% movies.each.with_index do |tt, i| %>
+          <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>-<%= tt.movie.id %>">
+            <ul>
+            <% @cinema.timetables.where(date: date).where(movie: tt.movie.id).each.with_index do |t, i| %>
+              <li><%= t.time.strftime('%T') %></li>
+            <% end %>
+            </ul>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+  <% end %>
+</div>
+
+<script>
+$('#myTabs a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+});
+</script>
+
+<%= link_to 'Edit', edit_cinema_path(@cinema) %> |
+<%= link_to 'Back', cinemas_path %>

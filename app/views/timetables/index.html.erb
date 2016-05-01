@@ -1,0 +1,14 @@
+<table class="table">
+  <tbody>
+    <% @timetables.each do |tt| %>
+      <tr>
+        <td><%= link_to tt.cinema.name, tt.cinema %></td>
+        <td><%= tt.date.strftime('%F') %></td>
+        <td><%= tt.time.strftime('%T') %></td>
+        <td><%= form_tag movie_timetable_path(@movie, tt), method: :delete do %><%= submit_tag '删除', class: 'btn-link' %><% end %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "create", new_movie_timetable_path(@movie) %>
