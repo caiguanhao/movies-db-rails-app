@@ -8,7 +8,6 @@
       <th>Name</th>
       <th>Alias</th>
       <th>Year</th>
-      <th>Timetables</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -19,7 +18,6 @@
         <td><%= movie.name %></td>
         <td><%= movie.alias %></td>
         <td><%= movie.year %></td>
-        <td><%= link_to 'Timetables', movie_timetables_path(movie) %></td>
         <td><%= link_to 'Show', movie %></td>
         <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
         <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>

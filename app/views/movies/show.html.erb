@@ -1,0 +1,117 @@
+<div class="row movie-info">
+  <div class="col-sm-3">
+    <%= image_tag @movie.poster, width: 270, height: 405, class: 'img-responsive' %>
+  </div>
+  <div class="col-sm-9">
+    <h2>
+      <%= @movie.name %>
+      <small>(<%= @movie.year %>)</small>
+    </h2>
+    <h4><%= @movie.alias %></h4>
+    <%= simple_format @movie.content %>
+    <div class="col-sm-8 movie-comment-block">
+      <% if user_signed_in? %>
+        <%= bootstrap_form_for @comment, url: comments_movie_path(@movie) do |f| %>
+          <%= f.label :rating %>
+          <span class="movie-rating" id="rating"></span>
+          <%= f.hidden_field :rating %>
+          <%= f.text_area :content, skip_label: true, rows: 3, placeholder: "您还没有发表影评" %>
+          <%= f.submit "发表", disabled: @comment.rating.nil? %>
+        <% end %>
+        <script>
+          $(function () {
+            $("#rating").rateYo({
+              rating: $("#rating").siblings('input[name="comment[rating]"]').val() || 0,
+              starWidth: '16px',
+              fullStar: true,
+              onChange: function (rating, instance) {
+                $(instance.node).siblings('input[name="comment[rating]"]').val(rating);
+                $(instance.node).siblings('input[type=submit]').prop('disabled', rating === 0);
+              }
+            });
+          });
+        </script>
+      <% else %>
+        <%= link_to "登录", new_user_session_path %>后发表影评。
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="row movie-timetables">
+  <div class="col-sm-12">
+    <ul class="nav nav-tabs">
+      <li class="no-link"><a>上映影院</a></li>
+      <% @dates.each.with_index do |date, i| %>
+        <li class="<%= i == 0 && ' active' || '' %>"><a href="#date-<%= date %>" data-toggle="tab"><%= date %></a></li>
+      <% end %>
+    </ul>
+    <div class="tab-content">
+      <% @dates.each.with_index do |date, i| %>
+        <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>">
+          <table class="table movie-timetable">
+            <tbody>
+              <% @movie.timetables.where(date: date).group_by(&:cinema_id).each do |_, tts| %>
+                <% tt = tts[0] %>
+                <tr>
+                  <td>
+                    <%= link_to tt.cinema do %>
+                      <%= image_tag tt.cinema.logo, width: 102, height: 44 %>
+                    <% end %>
+                  </td>
+                  <td><%= link_to tt.cinema.name, tt.cinema %></td>
+                  <td><%= tt.date.strftime('%F') %></td>
+                  <td><%= tts.map(&:time).minmax.map{|t|t.strftime('%T')}.join(' - ') %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="row movie-comments">
+  <div class="col-sm-12">
+    <ul class="nav nav-tabs">
+      <li class="no-link"><a>影评</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <table class="table movie-comment">
+          <tbody>
+            <% if @comments.size > 0 %>
+              <% @comments.each do |comment| %>
+                <tr>
+                  <td class="text-center">
+                    <%= image_tag 'user', width: 32, height: 32, class: 'user-avatar' %>
+                    <%= comment.user.email %>
+                  </td>
+                  <td class="text-center">
+                    <span class="comment-rating" data-rating="<%= comment.rating %>"></span>
+                    <%= time_ago_in_words comment.updated_at %>
+                  </td>
+                  <td><%= simple_format comment.content %></td>
+                </tr>
+              <% end %>
+            <% else %>
+              <tr><td>还没有人发表过影评。</td></tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $(function () {
+    $(".comment-rating").each(function () {
+      $(this).rateYo({
+        rating: $(this).data('rating') || 0,
+        starWidth: '16px',
+        readOnly: true,
+      });
+    });
+  });
+</script>

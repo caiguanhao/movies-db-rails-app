@@ -1,9 +1,5 @@
 class TimetablesController < ApplicationController
-  before_action :set_movie, only: [:index, :new, :create, :destroy]
-
-  def index
-    @dates = @movie.timetables.select(:date).uniq.pluck(:date)
-  end
+  before_action :set_movie, only: [:new, :create, :destroy]
 
   def new
     @timetable = @movie.timetables.new
@@ -13,7 +9,7 @@ class TimetablesController < ApplicationController
     @timetable = @movie.timetables.new(timetable_params)
 
     if @timetable.save
-      redirect_to movie_timetables_path(@movie), notice: 'Timetable was successfully created.'
+      redirect_to movie_path(@movie), notice: 'Timetable was successfully created.'
     else
       render :new
     end
@@ -21,7 +17,7 @@ class TimetablesController < ApplicationController
 
   def destroy
     @movie.timetables.find(params[:id]).destroy
-    redirect_to movie_timetables_path(@movie), notice: 'Timetable was successfully destroyed.'
+    redirect_to movie_path(@movie), notice: 'Timetable was successfully destroyed.'
   end
 
   private

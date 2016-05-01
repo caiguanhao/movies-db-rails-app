@@ -1,10 +1,13 @@
 .movie-info {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 .movie-timetables {
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
-.movie-timetable tbody tr:first-child td {
+.movie-timetable tbody tr:first-child td,
+.movie-comment tbody tr:first-child td {
   border-top-width: 0;
 }
 .movie-timetable td {
@@ -22,4 +25,25 @@
 .no-link a:hover {
   background-color: #fff !important;
   border-color: #fff #fff #ddd !important;
+}
+.movie-rating {
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 4px;
+}
+.movie-comment-block {
+  border-top: 1px solid #ccc;
+  margin-top: 20px;
+  padding-top: 5px;
+  padding-left: 0;
+  padding-right: 0;
+}
+.movie-comment-block .form-group {
+  margin-bottom: 8px;
+}
+.user-avatar {
+  border-radius: 100%;
+}
+.comment-rating {
+  margin-bottom: 4px;
 }

@@ -1,4 +1,4 @@
-User.create(email: 'a@a.com', password: '123321')
+user = User.create(email: 'a@a.com', password: '123321')
 
 movies = []
 movies << Movie.create(name: '疯狂动物城', alias: 'Zootopia', year: 2016,
@@ -74,3 +74,8 @@ movies.each.with_index do |movie, i|
     end
   end
 end
+
+Comment.create(user: user, movie: movies[0], rating: 4, content:
+%{作为迪士尼少有的春季档动画，《疯狂动物城》所展现出来的意识和状态完全不是一部动画电影该有的样子。
+
+自2008年的《闪电狗》以来，有了皮克斯大只佬约翰·拉塞特的倾力执掌，新世代的迪士尼动画展现出非凡的进步与成就。2012年的《无敌破坏王》，2013年的《冰雪奇缘》，2014年的《超能陆战队》，无论是原创还是改编作品，都足以让任何喜爱动画的观众欢呼雀跃。在这一点上，隔壁的表现就显得非常的起伏不定（《森林战士》、《老雷斯的故事》），果然经验和认识才是比技术更为重要的精神内核。})

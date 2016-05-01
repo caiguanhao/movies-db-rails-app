@@ -6,6 +6,8 @@
       <%= f.password_field :password_confirmation, autocomplete: "off" %>
       <%= f.form_group do %>
         <%= f.submit "注册" %>
+        &nbsp;&nbsp;&nbsp;
+        <%= link_to "已注册用户登录", new_user_session_path %>
       <% end %>
     <% end %>
   </div>

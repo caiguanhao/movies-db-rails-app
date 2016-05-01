@@ -29,7 +29,7 @@
         </div>
       </div><div class="text-right col-sm-4">
         <% if user_signed_in? %>
-          <%= current_user.email %>
+          <%= link_to current_user.email, edit_user_registration_path, class: 'header-link' %>
           <%= form_tag destroy_user_session_path, method: :delete, class: 'header-signout' do %><%= submit_tag '退出', class: 'header-link' %><% end %>
         <% else %>
           <%= link_to "登录", new_user_session_path, class: 'header-link' %>
@@ -37,7 +37,11 @@
         <% end %>
       </div>
     </div>
+    <%= bootstrap_flash %>
     <%= yield %>
   </div>
+  <footer class="footer">
+    <p class="footer-copy">&copy; 2016 buji</p>
+  </footer>
 </body>
 </html>
