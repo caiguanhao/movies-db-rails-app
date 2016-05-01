@@ -1,3 +1,25 @@
-// Place all the styles related to the Movies controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.movie-info {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.movie-timetables {
+}
+.movie-timetable tbody tr:first-child td {
+  border-top-width: 0;
+}
+.movie-timetable td {
+  vertical-align: middle !important;
+}
+.no-link a,
+.no-link a:active,
+.no-link a:focus,
+.no-link a:hover {
+  text-decoration: none;
+  color: #333;
+}
+.no-link a:active,
+.no-link a:focus,
+.no-link a:hover {
+  background-color: #fff !important;
+  border-color: #fff #fff #ddd !important;
+}

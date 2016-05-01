@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
 
   # GET /movies/1
   def show
+    redirect_to movie_timetables_path(@movie)
   end
 
   # GET /movies/new

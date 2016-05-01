@@ -1,14 +1,48 @@
-<table class="table">
-  <tbody>
-    <% @timetables.each do |tt| %>
-      <tr>
-        <td><%= link_to tt.cinema.name, tt.cinema %></td>
-        <td><%= tt.date.strftime('%F') %></td>
-        <td><%= tt.time.strftime('%T') %></td>
-        <td><%= form_tag movie_timetable_path(@movie, tt), method: :delete do %><%= submit_tag '删除', class: 'btn-link' %><% end %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= link_to "create", new_movie_timetable_path(@movie) %>
+<div class="row movie-info">
+  <div class="col-sm-3">
+    <%= image_tag @movie.poster, width: 270, height: 405, class: 'img-responsive' %>
+  </div>
+  <div class="col-sm-9">
+    <h2>
+      <%= @movie.name %>
+      <small>(<%= @movie.year %>)</small>
+    </h2>
+    <h4><%= @movie.alias %></h4>
+    <p>
+      <%= simple_format @movie.content %>
+    </p>
+  </div>
+</div>
+<div class="row movie-timetables">
+  <div class="col-sm-12">
+    <ul class="nav nav-tabs">
+      <li class="no-link"><a>上映影院</a></li>
+      <% @dates.each.with_index do |date, i| %>
+        <li class="<%= i == 0 && ' active' || '' %>"><a href="#date-<%= date %>" data-toggle="tab"><%= date %></a></li>
+      <% end %>
+    </ul>
+    <div class="tab-content">
+      <% @dates.each.with_index do |date, i| %>
+        <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>">
+          <table class="table movie-timetable">
+            <tbody>
+              <% @movie.timetables.where(date: date).group_by(&:cinema_id).each do |_, tts| %>
+                <% tt = tts[0] %>
+                <tr>
+                  <td>
+                    <%= link_to tt.cinema do %>
+                      <%= image_tag tt.cinema.logo, width: 102, height: 44 %>
+                    <% end %>
+                  </td>
+                  <td><%= link_to tt.cinema.name, tt.cinema %></td>
+                  <td><%= tt.date.strftime('%F') %></td>
+                  <td><%= tts.map(&:time).minmax.map{|t|t.strftime('%T')}.join(' - ') %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

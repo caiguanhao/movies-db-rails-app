@@ -1,7 +1,10 @@
-<%= bootstrap_form_for(@movie) do |f| %>
+<%= bootstrap_form_for @movie, layout: :horizontal do |f| %>
   <%= f.text_field :name %>
   <%= f.text_field :alias %>
   <%= f.number_field :year %>
-  <%= f.text_area :content %>
-  <%= f.submit %>
+  <%= f.text_field :poster %>
+  <%= f.text_area :content, rows: 10 %>
+  <%= f.form_group do %>
+    <%= f.submit %>
+  <% end %>
 <% end %>

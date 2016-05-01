@@ -13,6 +13,7 @@ zh-CN:
         name: "电影名"
         alias: "英文名"
         year: "年份"
+        poster: "海报"
         content: "电影介绍"
       user:
         email: "E-mail"

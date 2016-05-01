@@ -2,7 +2,7 @@ class TimetablesController < ApplicationController
   before_action :set_movie, only: [:index, :new, :create, :destroy]
 
   def index
-    @timetables = @movie.timetables
+    @dates = @movie.timetables.select(:date).uniq.pluck(:date)
   end
 
   def new
