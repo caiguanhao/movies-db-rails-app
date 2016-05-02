@@ -32,6 +32,7 @@ zh-CN:
         date: "日期"
         time: "时间"
         cinema_id: "影院"
+        room: "影厅"
       user:
         email: "E-mail"
         password: "密码"

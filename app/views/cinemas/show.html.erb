@@ -55,14 +55,29 @@
           <div class="tab-content">
             <% movies.each.with_index do |tt, i| %>
               <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>-<%= tt.movie.id %>">
-                <h2><%= link_to tt.movie.name, tt.movie %></h2>
-                <table class="table movie-timetable">
+                <h2>
+                  <%= link_to tt.movie.name, tt.movie %>
+                  <% if is_admin? %>
+                    <%= link_to '创建新时间', new_movie_timetable_path(tt.movie), class: 'btn btn-sm btn-default' %>
+                  <% end %>
+                </h2>
+                <table class="table cinema-timetable">
                   <tbody>
                     <% @cinema.timetables.where(date: date).where(movie: tt.movie.id).each.with_index do |t, i| %>
                       <tr>
-                        <td>
+                        <td class="ctt-1">
                           <h3><%= t.time.strftime('%H:%M') %></h3>
-                          <p>预计<%= (t.time + tt.movie.runtime * 60).strftime('%H:%M') %>离场</p>
+                          <span>预计<%= (t.time + tt.movie.runtime * 60).strftime('%H:%M') %>离场</span>
+                        </td>
+                        <td class="ctt-2">
+                          <span>3D<br>中文</span>
+                        </td>
+                        <td class="ctt-3">
+                          <span><%= t.room %></span>
+                          <% if is_admin? %>
+                            <%= link_to '编辑', edit_movie_timetable_path(tt.movie, t) %>
+                            <%= link_to '删除', movie_timetable_path(tt.movie, t), method: :delete %>
+                          <% end %>
                         </td>
                       </tr>
                     <% end %>

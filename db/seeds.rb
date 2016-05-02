@@ -31,11 +31,20 @@ times = [
   [ '11:00', '13:00', '15:00', '17:00', '19:00', '21:00', '23:00' ],
 ]
 
+rooms = [
+  [ '1号厅', '2号厅', '3号厅', '2号厅', '1号厅', '3号厅', '1号厅' ],
+  [ '1号厅', '2号厅', '1号厅', '2号厅', '1号厅', '2号厅', '1号厅' ],
+  [ '1号厅', '3号厅', '2号厅', '1号厅', '2号厅', '2号厅', '1号厅' ],
+  [ '2号厅', '1号厅', '4号厅', '3号厅', '1号厅', '2号厅', '4号厅' ],
+  [ '1号厅', '4号厅', '2号厅', '1号厅', '3号厅', '4号厅', '2号厅' ],
+]
+
 Movie.all.each.with_index do |movie, i|
   dates[i % dates.size].each do |date|
     Cinema.all.order("RANDOM()").limit(Cinema.count * 2 / 3).each.with_index do |cinema, j|
-      times[(i + j) % times.size].each do |time|
-        Timetable.create(date: date, time: time, cinema: cinema, movie: movie)
+      timeidx = (i + j) % times.size
+      times[timeidx].each.with_index do |time, k|
+        Timetable.create(date: date, time: time, cinema: cinema, movie: movie, room: rooms[timeidx][k])
       end
     end
   end

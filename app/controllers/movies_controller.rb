@@ -1,6 +1,8 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :edit, :update, :destroy, :new_comment]
 
+  before_action :authenticate_user!, only: [:new_comment]
+
   before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy]
 
   # GET /movies
@@ -57,10 +59,12 @@ class MoviesController < ApplicationController
   def new_comment
     @comment = @movie.comments.where(user: current_user).first
     if @comment
-      @comment.update(comment_params)
+      @comment.assign_attributes(comment_params)
     else
-      @movie.comments.create(comment_params)
+      @comment = @movie.comments.new(comment_params)
     end
+    @comment.user_id = current_user.id
+    @comment.save
     redirect_to movie_path(@movie)
   end
 

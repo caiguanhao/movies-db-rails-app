@@ -27,7 +27,7 @@ class CinemasController < ApplicationController
     @cinema = Cinema.new(cinema_params)
 
     if @cinema.save
-      redirect_to @cinema, notice: 'Cinema was successfully created.'
+      redirect_to @cinema, notice: '影院已创建。'
     else
       render :new
     end
@@ -36,7 +36,7 @@ class CinemasController < ApplicationController
   # PATCH/PUT /cinemas/1
   def update
     if @cinema.update(cinema_params)
-      redirect_to @cinema, notice: 'Cinema was successfully updated.'
+      redirect_to @cinema, notice: '影院已修改。'
     else
       render :edit
     end
@@ -45,7 +45,7 @@ class CinemasController < ApplicationController
   # DELETE /cinemas/1
   def destroy
     @cinema.destroy
-    redirect_to cinemas_url, notice: 'Cinema was successfully destroyed.'
+    redirect_to cinemas_url, notice: '影院已删除。'
   end
 
   private
