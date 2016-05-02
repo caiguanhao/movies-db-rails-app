@@ -100,7 +100,7 @@
                 <tr>
                   <td class="movie-comment-user">
                     <%= link_to user_path(comment.user) do %>
-                      <%= image_tag comment.user.avatar || 'user', width: 32, height: 32, class: 'user-avatar' %>
+                      <%= image_tag comment.user.avatar || 'user.png', width: 32, height: 32, class: 'user-avatar' %>
                       <%= comment.user.name || comment.user.email %>
                     <% end %>
                   </td>
