@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160501074428) do
+ActiveRecord::Schema.define(version: 20160502011151) do
 
   create_table "cinemas", force: :cascade do |t|
     t.string   "name"
@@ -62,6 +62,12 @@ ActiveRecord::Schema.define(version: 20160501074428) do
     t.datetime "remember_created_at"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.string   "gender"
+    t.string   "astro"
+    t.string   "city"
+    t.string   "intro"
+    t.string   "avatar"
+    t.string   "name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -1,3 +1,28 @@
-// Place all the styles related to the Users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.userpage {
+  display: table;
+  width: 100%;
+  padding: 20px;
+}
+.userpage-avatar {
+  display: table-cell;
+  vertical-align: top;
+  width: 120px;
+}
+.userpage-info {
+  display: table-cell;
+  vertical-align: top;
+}
+.userpage-info h2 {
+  margin: 0 0 12px;
+}
+.userpage-action {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 4px 8px;
+  line-height: 16px;
+  background: #fff;
+  font-size: 11px;
+  font-weight: normal;
+  vertical-align: middle;
+  margin-left: 10px;
+}

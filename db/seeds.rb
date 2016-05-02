@@ -1,4 +1,6 @@
-user = User.create(email: 'a@a.com', password: '123321')
+user = User.create(email: 'a@a.com', password: '123321', name: 'test',
+gender: '男', astro: '狮子座', city: '上海', intro: '没有写。',
+avatar: '/uploads/c01b5cbdeafc44925690519b76283ab2.jpg')
 
 movies = []
 movies << Movie.create(name: '疯狂动物城', alias: 'Zootopia', year: 2016,

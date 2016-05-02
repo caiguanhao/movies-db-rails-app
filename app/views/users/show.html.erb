@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="userpage">
+      <div class="userpage-avatar">
+        <%= image_tag @user.avatar || 'user', width: 100, height: 100 %>
+      </div>
+      <div class="userpage-info">
+        <h2>
+          <%= @user.name || @user.email %>
+          <%= link_to "发送消息", new_user_session_path, class: 'userpage-action' %>
+        </h2>
+        <%= simple_format @user.intro %>
+        <p><%= "#{@user.gender} #{@user.city} #{@user.astro}" %></p>
+      </div>
+    </div>
+  </div>
+</div>
