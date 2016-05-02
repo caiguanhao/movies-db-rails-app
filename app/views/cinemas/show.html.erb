@@ -4,60 +4,80 @@
       <%= image_tag @cinema.logo, width: 102, height: 44 %>
     </div>
     <div class="pull-left">
-      <h2 class="cinema-name"><%= @cinema.name %></h2>
+      <h2 class="cinema-name">
+        <%= @cinema.name %>
+        <% if is_admin? %>
+          <div class="btn-group">
+            <%= link_to '新增影院', new_cinema_path(@cinema), class: 'btn btn-sm btn-default' %>
+            <%= link_to '编辑影院', edit_cinema_path(@cinema), class: 'btn btn-sm btn-default' %>
+          </div>
+        <% end %>
+      </h2>
       <h5><%= @cinema.city %></h5>
     </div>
   </div>
   <div class="col-sm-6 cinema-info">
-    <%= simple_format @cinema.content %>
+    地址：<%= @cinema.address %><br>
+    电话：<%= @cinema.phone %> 营业时间：<%= @cinema.business_hours %>
   </div>
 </div>
 
-<ul class="nav nav-tabs">
-  <% @dates.each.with_index do |date, i| %>
-    <li class="<%= i == 0 && ' active' || '' %>">
-      <a href="#date-<%= date %>" data-toggle="tab">
-        <%= date.strftime('%-m月%-d日') %>
-      </a>
-    </li>
-  <% end %>
-</ul>
+<div class="row cinema-header">
+  <div class="col-sm-9">
+    <ul class="nav nav-tabs">
+      <% @dates.each.with_index do |date, i| %>
+        <li class="<%= i == 0 && ' active' || '' %>">
+          <a href="#date-<%= date %>" data-toggle="tab">
+            <%= date.strftime('%-m月%-d日') %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
 
-<div class="tab-content cinema-list">
-  <% @dates.each.with_index do |date, i| %>
-    <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>">
+    <div class="tab-content cinema-list">
+      <% @dates.each.with_index do |date, i| %>
+        <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>">
 
-      <% movies = @cinema.timetables.where(date: date).group(:movie_id) %>
+          <% movies = @cinema.timetables.where(date: date).group(:movie_id) %>
 
-      <ul class="nav nav-tabs">
-        <% movies.each.with_index do |tt, i| %>
-          <li class="<%= i == 0 && ' active' || '' %>">
-            <a href="#date-<%= date %>-<%= tt.movie.id %>" data-toggle="tab">
-              <%= image_tag tt.movie.poster, width: 100, height: 150 %>
-              <br>
-              <%= tt.movie.name %>
-            </a>
-          </li>
-        <% end %>
-      </ul>
+          <ul class="nav nav-tabs">
+            <% movies.each.with_index do |tt, i| %>
+              <li class="<%= i == 0 && ' active' || '' %>">
+                <a href="#date-<%= date %>-<%= tt.movie.id %>" data-toggle="tab">
+                  <%= image_tag tt.movie.poster, width: 100, height: 150 %>
+                  <br>
+                  <%= tt.movie.name %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
 
-      <div class="tab-content">
-        <% movies.each.with_index do |tt, i| %>
-          <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>-<%= tt.movie.id %>">
-            <h2><%= tt.movie.name %></h2>
-            <table class="table movie-timetable">
-              <tbody>
-                <% @cinema.timetables.where(date: date).where(movie: tt.movie.id).each.with_index do |t, i| %>
-                  <tr>
-                    <td><h2><%= t.time.strftime('%H:%M') %></h2></td>
-                  </tr>
-                <% end %>
-              </tbody>
-            </table>
+          <div class="tab-content">
+            <% movies.each.with_index do |tt, i| %>
+              <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>-<%= tt.movie.id %>">
+                <h2><%= link_to tt.movie.name, tt.movie %></h2>
+                <table class="table movie-timetable">
+                  <tbody>
+                    <% @cinema.timetables.where(date: date).where(movie: tt.movie.id).each.with_index do |t, i| %>
+                      <tr>
+                        <td>
+                          <h3><%= t.time.strftime('%H:%M') %></h3>
+                          <p>预计<%= (t.time + tt.movie.runtime * 60).strftime('%H:%M') %>离场</p>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            <% end %>
           </div>
-        <% end %>
-      </div>
 
+        </div>
+      <% end %>
     </div>
-  <% end %>
+  </div>
+  <div class="col-sm-3">
+    <h3>影院介绍</h3>
+    <%= simple_format @cinema.content %>
+  </div>
 </div>

@@ -5,7 +5,11 @@ class MoviesController < ApplicationController
 
   # GET /movies
   def index
-    @movies = Movie.all
+    if params[:query].present?
+      @movies = Movie.where('name like :query or alias like :query', { query: "%#{params[:query]}%" })
+    else
+      @movies = Movie.all
+    end
   end
 
   # GET /movies/1
@@ -67,7 +71,20 @@ class MoviesController < ApplicationController
     end
 
     def movie_params
-      params.require(:movie).permit(:name, :alias, :year, :content)
+      params.require(:movie).permit(
+        :name,
+        :alias,
+        :year,
+        :poster,
+        :star,
+        :director,
+        :writer,
+        :country,
+        :runtime,
+        :aka,
+        :genre,
+        :content,
+      )
     end
 
     def comment_params

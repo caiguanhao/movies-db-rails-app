@@ -11,6 +11,9 @@ zh-CN:
       cinema:
         name: "影院名"
         city: "影院所在城市"
+        address: "地址"
+        phone: "联系电话"
+        business_hours: "营业时间"
         content: "影院介绍"
       movie:
         name: "电影名"
@@ -18,6 +21,13 @@ zh-CN:
         year: "年份"
         poster: "海报"
         content: "电影介绍"
+        star: "主演"
+        director: "导演"
+        writer: "编剧"
+        country: "国家"
+        runtime: "片长"
+        aka: "又名"
+        genre: "类型"
       timetable:
         date: "日期"
         time: "时间"

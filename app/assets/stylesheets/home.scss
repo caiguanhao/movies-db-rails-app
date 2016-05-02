@@ -6,3 +6,21 @@
 .home-cinemas-list li {
   padding: 4px 0;
 }
+.home-movies {
+  max-height: 200px;
+  margin-right: 20px;
+  margin-left: -10px;
+}
+.home-movie-item {
+  width: 120px;
+  text-align: center;
+  padding: 0 10px;
+  font-size: 13px;
+}
+.home-movies .slick-prev:before,
+.home-movies .slick-next:before {
+  color: #666;
+}
+.home-movie-item img {
+  margin-bottom: 10px;
+}

@@ -56,6 +56,6 @@ class CinemasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def cinema_params
-      params.require(:cinema).permit(:name, :city, :content)
+      params.require(:cinema).permit(:name, :city, :content, :address, :phone, :business_hours)
     end
 end

@@ -11,15 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160502032724) do
+ActiveRecord::Schema.define(version: 20160502092909) do
 
   create_table "cinemas", force: :cascade do |t|
     t.string   "name"
     t.string   "city"
     t.string   "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "logo"
+    t.string   "address"
+    t.string   "business_hours"
+    t.string   "phone"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -62,6 +65,13 @@ ActiveRecord::Schema.define(version: 20160502032724) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "poster"
+    t.string   "star"
+    t.string   "director"
+    t.string   "writer"
+    t.string   "country"
+    t.integer  "runtime"
+    t.string   "aka"
+    t.string   "genre"
   end
 
   create_table "timetables", force: :cascade do |t|

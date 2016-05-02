@@ -8,12 +8,20 @@
       <small>(<%= @movie.year %>)</small>
       <% if is_admin? %>
         <div class="btn-group">
+          <%= link_to '新增电影', new_movie_path(@movie), class: 'btn btn-sm btn-default' %>
           <%= link_to '编辑电影', edit_movie_path(@movie), class: 'btn btn-sm btn-default' %>
           <%= link_to '新增时间', new_movie_timetable_path(@movie), class: 'btn btn-sm btn-default' %>
         </div>
       <% end %>
     </h2>
     <h4><%= @movie.alias %></h4>
+    <p>主演：<%= @movie.star %></p>
+    <p>导演：<%= @movie.director %></p>
+    <p>编剧：<%= @movie.writer %></p>
+    <p>国家：<%= @movie.country %></p>
+    <p>片长：<%= @movie.runtime %>分钟</p>
+    <p>又名：<%= @movie.aka %></p>
+    <p>类型：<%= @movie.genre %></p>
     <%= simple_format @movie.content %>
     <div class="col-sm-8 movie-comment-block">
       <% if user_signed_in? %>

@@ -1,25 +1,37 @@
 <div class="row">
   <div class="col-sm-9">
     <h2>正在热映 <%= @movies_current.count %> 部</h2>
-    <div class="row">
+    <div class="home-movies">
       <% @movies_current.each do |movie| %>
-        <div class="col-sm-3">
+        <div class="home-movie-item">
           <%= link_to movie_path(movie) do %>
-            <img src="<%= movie.poster %>" width="100" height="150"><br><%= movie.name %>
+            <img src="<%= movie.poster %>" width="100" height="150">
+            <%= movie.name %>
           <% end %>
         </div>
       <% end %>
     </div>
     <h2>即将上映 <%= @movies_future.size %> 部</h2>
-    <div class="row">
+    <div class="home-movies">
       <% @movies_future.each do |movie| %>
-        <div class="col-sm-3">
+        <div class="home-movie-item">
           <%= link_to movie_path(movie) do %>
-            <img src="<%= movie.poster %>" width="100" height="150"><br><%= movie.name %>
+            <img src="<%= movie.poster %>" width="100" height="150">
+            <%= movie.name %>
           <% end %>
         </div>
       <% end %>
     </div>
+    <script>
+      $(document).ready(function(){
+        $('.home-movies').slick({
+          speed: 300,
+          infinite: false,
+          slidesToShow: 1,
+          variableWidth: true
+        });
+      });
+    </script>
   </div>
   <div class="col-sm-3">
     <h4>影院</h4>
