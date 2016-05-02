@@ -28,14 +28,26 @@
           </span>
         </div>
       </div><div class="text-right col-sm-4">
-        <% if user_signed_in? %>
-          <%= link_to current_user.name || current_user.email, user_path(current_user), class: 'header-link' %>
-          <%= link_to "设置", edit_user_registration_path, class: 'header-link' %>
-          <%= form_tag destroy_user_session_path, method: :delete, class: 'header-signout' do %><%= submit_tag '退出', class: 'header-link' %><% end %>
-        <% else %>
-          <%= link_to "登录", new_user_session_path, class: 'header-link' %>
-          <%= link_to "注册", new_user_registration_path, class: 'header-link' %>
-        <% end %>
+        <div class="btn-group">
+          <% if user_signed_in? %>
+            <%= link_to current_user.name || current_user.email, user_path(current_user), class: 'btn header-link' %>
+            <%= link_to "设置", edit_user_registration_path, class: 'btn header-link' %>
+            <div class="btn-group" role="group">
+              <button type="button" class="btn header-link dropdown-toggle" data-toggle="dropdown">
+                管理
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu pull-right">
+                <li><%= link_to "电影列表", movies_path %></li>
+                <li><%= link_to "影院列表", cinemas_path %></li>
+              </ul>
+            </div>
+            <%= link_to '退出', destroy_user_session_path, method: :delete, class: 'btn header-link' %>
+          <% else %>
+            <%= link_to "登录", new_user_session_path, class: 'btn header-link' %>
+            <%= link_to "注册", new_user_registration_path, class: 'btn header-link' %>
+          <% end %>
+        </div>
       </div>
     </div>
     <%= bootstrap_flash %>

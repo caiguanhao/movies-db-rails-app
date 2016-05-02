@@ -1,6 +1,4 @@
-<p id="notice"><%= notice %></p>
-
-<div class="row">
+<div class="row cinema-header">
   <div class="col-sm-6">
     <div class="pull-left cinema-logo">
       <%= image_tag @cinema.logo, width: 102, height: 44 %>
@@ -16,12 +14,16 @@
 </div>
 
 <ul class="nav nav-tabs">
-  <% @dates.each do |date| %>
-    <li><a href="#date-<%= date %>" data-toggle="tab"><%= date %></a></li>
+  <% @dates.each.with_index do |date, i| %>
+    <li class="<%= i == 0 && ' active' || '' %>">
+      <a href="#date-<%= date %>" data-toggle="tab">
+        <%= date.strftime('%-m月%-d日') %>
+      </a>
+    </li>
   <% end %>
 </ul>
 
-<div class="tab-content">
+<div class="tab-content cinema-list">
   <% @dates.each.with_index do |date, i| %>
     <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>">
 
@@ -29,19 +31,29 @@
 
       <ul class="nav nav-tabs">
         <% movies.each.with_index do |tt, i| %>
-          <li class="<%= i == 0 && ' active' || '' %>"><a href="#date-<%= date %>-<%= tt.movie.id %>" data-toggle="tab"><%= tt.movie.name %></a></li>
+          <li class="<%= i == 0 && ' active' || '' %>">
+            <a href="#date-<%= date %>-<%= tt.movie.id %>" data-toggle="tab">
+              <%= image_tag tt.movie.poster, width: 100, height: 150 %>
+              <br>
+              <%= tt.movie.name %>
+            </a>
+          </li>
         <% end %>
       </ul>
-
 
       <div class="tab-content">
         <% movies.each.with_index do |tt, i| %>
           <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>-<%= tt.movie.id %>">
-            <ul>
-            <% @cinema.timetables.where(date: date).where(movie: tt.movie.id).each.with_index do |t, i| %>
-              <li><%= t.time.strftime('%T') %></li>
-            <% end %>
-            </ul>
+            <h2><%= tt.movie.name %></h2>
+            <table class="table movie-timetable">
+              <tbody>
+                <% @cinema.timetables.where(date: date).where(movie: tt.movie.id).each.with_index do |t, i| %>
+                  <tr>
+                    <td><h2><%= t.time.strftime('%H:%M') %></h2></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
           </div>
         <% end %>
       </div>
@@ -49,13 +61,3 @@
     </div>
   <% end %>
 </div>
-
-<script>
-$('#myTabs a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-});
-</script>
-
-<%= link_to 'Edit', edit_cinema_path(@cinema) %> |
-<%= link_to 'Back', cinemas_path %>

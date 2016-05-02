@@ -1,6 +1,8 @@
 class TimetablesController < ApplicationController
   before_action :set_movie, only: [:new, :create, :destroy]
 
+  before_action :authenticate_admin!, only: [:new, :create, :destroy]
+
   def new
     @timetable = @movie.timetables.new
   end

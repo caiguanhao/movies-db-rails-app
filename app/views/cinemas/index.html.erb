@@ -1,28 +1,34 @@
-<p id="notice"><%= notice %></p>
+<h2>影院列表</h2>
 
-<h1>所有影院</h1>
+<hr>
+
+<% if is_admin? %>
+  <%= link_to '创建新影院', new_cinema_path, class: 'btn btn-sm btn-default' %>
+  <hr>
+<% end %>
 
 <table class="table">
   <thead>
     <tr>
       <th>名称</th>
       <th>城市</th>
-      <th colspan="3"></th>
+      <% if is_admin? %>
+        <th colspan="2"></th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
     <% @cinemas.each do |cinema| %>
       <tr>
+        <td><%= link_to cinema do %><%= image_tag cinema.logo, width: 102, height: 44 %><% end %></td>
         <td><%= link_to cinema.name, cinema %></td>
         <td><%= cinema.city %></td>
-        <td><%= link_to '编辑', edit_cinema_path(cinema) %></td>
-        <td><%= form_tag cinema, method: :delete do %><%= submit_tag '删除', class: 'btn-link' %><% end %></td>
+        <% if is_admin? %>
+          <td><%= link_to '编辑', edit_cinema_path(cinema) %></td>
+          <td><%= link_to '删除', cinema, method: :delete, data: { confirm: '确认删除？' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to '创建新的影院', new_cinema_path %>

@@ -1,8 +1,13 @@
-<h1>Editing Movie</h1>
-
-<%= render 'form' %>
+<h2>编辑电影</h2>
 
 <hr>
 
-<%= link_to 'Show', @movie %> |
-<%= link_to 'Back', movies_path %>
+<div class="btn-group">
+  <%= link_to '电影列表', movies_path, class: 'btn btn-sm btn-default' %>
+  <%= link_to '电影页', @movie, class: 'btn btn-sm btn-default' %>
+  <%= link_to '新增时间', new_movie_timetable_path(@movie), class: 'btn btn-sm btn-default' %>
+</div>
+
+<hr>
+
+<%= render 'form' %>

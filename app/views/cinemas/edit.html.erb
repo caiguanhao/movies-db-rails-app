@@ -1,6 +1,12 @@
-<h1>Editing Cinema</h1>
+<h2>编辑影院</h2>
+
+<hr>
+
+<div class="btn-group">
+  <%= link_to '影院列表', cinemas_path, class: 'btn btn-sm btn-default' %>
+  <%= link_to '影院页', @cinema, class: 'btn btn-sm btn-default' %>
+</div>
+
+<hr>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @cinema %> |
-<%= link_to 'Back', cinemas_path %>

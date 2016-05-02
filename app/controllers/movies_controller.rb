@@ -1,6 +1,8 @@
 class MoviesController < ApplicationController
   before_action :set_movie, only: [:show, :edit, :update, :destroy, :new_comment]
 
+  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy]
+
   # GET /movies
   def index
     @movies = Movie.all
@@ -8,7 +10,7 @@ class MoviesController < ApplicationController
 
   # GET /movies/1
   def show
-    @dates = @movie.timetables.select(:date).uniq.pluck(:date)
+    @dates = @movie.timetables.select(:date).uniq.where('date >= ?', Date.current).pluck(:date)
     @comments = @movie.comments.to_a
     @comment = @movie.comments.where(user: current_user).first || @movie.comments.new
   end

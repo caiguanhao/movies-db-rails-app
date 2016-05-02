@@ -1,6 +1,20 @@
-<%= bootstrap_form_for @timetable, url: movie_path(@movie), layout: :horizontal do |f| %>
+<h2>为电影 <%= @movie.name %> 新增时间</h2>
+
+<hr>
+
+<div class="btn-group">
+  <%= link_to '电影列表', movies_path, class: 'btn btn-sm btn-default' %>
+  <%= link_to '电影页', @movie, class: 'btn btn-sm btn-default' %>
+  <%= link_to '电影编辑页', edit_movie_path(@movie), class: 'btn btn-sm btn-default' %>
+</div>
+
+<hr>
+
+<%= bootstrap_form_for @timetable, url: movie_timetables_path(@movie), layout: :horizontal do |f| %>
   <%= f.date_select :date %>
   <%= f.time_select :time %>
   <%= f.select :cinema_id, Cinema.all.collect { |c| [ c.name, c.id ] } %>
-  <%= f.submit %>
+  <%= f.form_group do %>
+    <%= f.submit %>
+  <% end %>
 <% end %>

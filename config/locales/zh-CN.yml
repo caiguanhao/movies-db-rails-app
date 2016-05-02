@@ -3,6 +3,7 @@ zh-CN:
     models:
       cinema: "影院"
       movie: "电影"
+      timetable: "时间表"
       user: "用户"
       comment: "影评"
       message: "消息"
@@ -17,6 +18,10 @@ zh-CN:
         year: "年份"
         poster: "海报"
         content: "电影介绍"
+      timetable:
+        date: "日期"
+        time: "时间"
+        cinema_id: "影院"
       user:
         email: "E-mail"
         password: "密码"

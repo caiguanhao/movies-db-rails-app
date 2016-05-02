@@ -1,31 +1,37 @@
-<p id="notice"><%= notice %></p>
+<h2>电影列表</h2>
 
-<h1>Listing Movies</h1>
+<hr>
+
+<% if is_admin? %>
+  <%= link_to '创建新电影', new_movie_path, class: 'btn btn-sm btn-default' %>
+  <hr>
+<% end %>
 
 <table class="table">
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Alias</th>
-      <th>Year</th>
-      <th colspan="3"></th>
+      <th>海报</th>
+      <th>名称</th>
+      <th>英文名</th>
+      <th>年份</th>
+      <% if is_admin? %>
+        <th colspan="2"></th>
+      <% end %>
     </tr>
   </thead>
 
   <tbody>
     <% @movies.each do |movie| %>
       <tr>
-        <td><%= movie.name %></td>
+        <td><%= link_to movie do %><%= image_tag movie.poster, width: 50, height: 75 %><% end %></td>
+        <td><%= link_to movie.name, movie %></td>
         <td><%= movie.alias %></td>
         <td><%= movie.year %></td>
-        <td><%= link_to 'Show', movie %></td>
-        <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
-        <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if is_admin? %>
+          <td><%= link_to '编辑', edit_movie_path(movie) %></td>
+          <td><%= link_to '删除', movie, method: :delete, data: { confirm: '确认删除？' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Movie', new_movie_path %>

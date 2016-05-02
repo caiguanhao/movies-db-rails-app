@@ -6,6 +6,12 @@
     <h2>
       <%= @movie.name %>
       <small>(<%= @movie.year %>)</small>
+      <% if is_admin? %>
+        <div class="btn-group">
+          <%= link_to '编辑电影', edit_movie_path(@movie), class: 'btn btn-sm btn-default' %>
+          <%= link_to '新增时间', new_movie_timetable_path(@movie), class: 'btn btn-sm btn-default' %>
+        </div>
+      <% end %>
     </h2>
     <h4><%= @movie.alias %></h4>
     <%= simple_format @movie.content %>

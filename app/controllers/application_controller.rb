@@ -5,6 +5,20 @@ class ApplicationController < ActionController::Base
 
   after_filter :store_location
 
+  def authenticate_admin!
+    return if authenticate_user!.nil?
+    if !is_admin?
+      flash[:error] = '用户没有管理员权限。'
+      redirect_to root_path
+    end
+  end
+
+  helper_method :is_admin?
+
+  def is_admin?
+    user_signed_in? && current_user.admin == true
+  end
+
   def store_location
     return unless request.get?
     if (request.path != "/users/sign_in" &&

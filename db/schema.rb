@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160502015131) do
+ActiveRecord::Schema.define(version: 20160502032724) do
 
   create_table "cinemas", force: :cascade do |t|
     t.string   "name"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 20160502015131) do
     t.string   "intro"
     t.string   "avatar"
     t.string   "name"
+    t.boolean  "admin"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

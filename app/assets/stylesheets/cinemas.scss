@@ -1,3 +1,7 @@
+.cinema-header {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .cinema-logo {
   padding: 0 10px 10px 0;
 }
@@ -11,4 +15,13 @@
 }
 .cinema-info p {
   margin: 0;
+}
+.cinema-list {
+  margin-top: 20px;
+}
+.cinema-list .nav-tabs li {
+  text-align: center;
+}
+.cinema-list .nav-tabs li img {
+  margin-bottom: 5px;
 }

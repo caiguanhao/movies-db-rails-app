@@ -33,9 +33,6 @@
   line-height: 16px;
   background: #fff;
 }
-.header-link + .header-link {
-  margin-left: 5px;
-}
 .header-signout {
   display: inline-block;
   margin-left: 10px;

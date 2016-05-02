@@ -1,4 +1,4 @@
-user = User.create(email: 'a@a.com', password: '123321', name: 'test',
+user = User.create(email: 'a@a.com', password: '123321', name: 'test', admin: true,
 gender: '男', astro: '狮子座', city: '上海', intro: '没有写。',
 avatar: '/uploads/c01b5cbdeafc44925690519b76283ab2.jpg')
 

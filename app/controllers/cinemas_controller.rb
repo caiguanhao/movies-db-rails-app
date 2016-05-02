@@ -1,6 +1,8 @@
 class CinemasController < ApplicationController
   before_action :set_cinema, only: [:show, :edit, :update, :destroy]
 
+  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy]
+
   # GET /cinemas
   def index
     @cinemas = Cinema.all
@@ -8,7 +10,7 @@ class CinemasController < ApplicationController
 
   # GET /cinemas/1
   def show
-    @dates = @cinema.timetables.group(:date).pluck(:date)
+    @dates = @cinema.timetables.select(:date).uniq.where('date >= ?', Date.current).limit(7).pluck(:date)
   end
 
   # GET /cinemas/new

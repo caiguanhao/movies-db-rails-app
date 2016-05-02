@@ -1,9 +1,32 @@
-<h2>正在热映 <%= @movies.count %> 部</h2>
 <div class="row">
-<% @movies.each do |movie| %>
-  <div class="col-sm-3">
-    <%= link_to movie_path(movie) do %>
-      <img src="<%= movie.poster %>" width="100" height="150"><br><%= movie.name %>
-    <% end %>
+  <div class="col-sm-9">
+    <h2>正在热映 <%= @movies_current.count %> 部</h2>
+    <div class="row">
+      <% @movies_current.each do |movie| %>
+        <div class="col-sm-3">
+          <%= link_to movie_path(movie) do %>
+            <img src="<%= movie.poster %>" width="100" height="150"><br><%= movie.name %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+    <h2>即将上映 <%= @movies_future.size %> 部</h2>
+    <div class="row">
+      <% @movies_future.each do |movie| %>
+        <div class="col-sm-3">
+          <%= link_to movie_path(movie) do %>
+            <img src="<%= movie.poster %>" width="100" height="150"><br><%= movie.name %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
   </div>
-<% end %>
+  <div class="col-sm-3">
+    <h4>影院</h4>
+    <ul class="home-cinemas-list">
+      <% @cinemas.each do |cinema| %>
+        <li><%= link_to cinema.name, cinema %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>
