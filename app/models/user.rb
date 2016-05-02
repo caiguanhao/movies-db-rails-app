@@ -25,6 +25,6 @@ class User < ActiveRecord::Base
   validates_length_of :name, maximum: 10, on: :update
   validates_length_of :city, maximum: 10, on: :update
   validates_length_of :intro, maximum: 300, on: :update
-  validates_inclusion_of :gender, in: GENDERS, on: :update
-  validates_inclusion_of :astro, in: ASTROS, on: :update
+  validates_inclusion_of :gender, in: GENDERS, allow_nil: true, on: :update
+  validates_inclusion_of :astro, in: ASTROS, allow_nil: true, on: :update
 end
