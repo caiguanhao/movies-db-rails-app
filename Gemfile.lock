@@ -74,6 +74,7 @@ GEM
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
+    puma (3.4.0)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -142,6 +143,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   bootstrap_form (~> 2.3.0)
   devise
+  puma
   rails (= 4.2.6)
   sass-rails (~> 5.0)
   spring
