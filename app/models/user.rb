@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :rememberable, :validatable
 
+  acts_as_messageable required: :body
+
   has_many :comments
 
   GENDERS = ['男', '女']

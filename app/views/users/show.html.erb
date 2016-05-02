@@ -7,11 +7,75 @@
       <div class="userpage-info">
         <h2>
           <%= @user.name || @user.email %>
-          <%= link_to "发送消息", new_user_session_path, class: 'userpage-action' %>
+          <% if current_user && @user != current_user %>
+            <%= link_to "发送消息", '#', data: { toggle: 'modal',  target: '#message' }, class: 'userpage-action' %>
+          <% end %>
         </h2>
         <%= simple_format @user.intro %>
         <p><%= "#{@user.gender} #{@user.city} #{@user.astro}" %></p>
       </div>
     </div>
+  </div>
+</div>
+
+<% if @user == current_user %>
+  <div class="row">
+    <div class="col-sm-12">
+      <ul class="nav nav-tabs">
+        <li class="no-link"><a>我的消息 (<%= current_user.received_messages.count %>)</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active">
+          <table class="table">
+            <tbody>
+                <tr>
+                  <th width="20%">发送日期</th>
+                  <th width="20%">发件人</th>
+                  <th width="60%">内容</th>
+                </tr>
+            </tbody>
+            <tbody>
+              <% current_user.received_messages.each do |msg| %>
+                <tr>
+                  <td><%= msg.created_at.strftime('%F %T') %></td>
+                  <td><%= link_to msg.from.name || msg.from.email, user_path(msg.from) %></td>
+                  <td>
+                    <a href class="remove-hidden">显示</a>
+                    <span style="display: none"><%= simple_format msg.body %></span>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $('.remove-hidden').click(function (e) {
+      e.preventDefault();
+      $(this).next().show();
+      $(this).remove();
+    });
+  </script>
+<% end %>
+
+<div class="modal fade" id="message" tabindex="-1">
+  <div class="modal-dialog">
+    <%= bootstrap_form_tag url: user_messages_path(@user) do |f| %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+          <h4 class="modal-title">向 <%= @user.name || @user.email %> 发消息</h4>
+        </div>
+        <div class="modal-body">
+          <%= f.hidden_field :user_id, value: @user.id %>
+          <%= f.text_area :content, label: "内容", rows: 5 %>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">发送</button>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>

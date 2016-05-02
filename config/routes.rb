@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   root to: "home#index"
   devise_for :users, :controllers => {:registrations => "registrations"}
-  resources :users, :only => [:show]
+  resources :users, :only => [:show] do
+    post :messages
+  end
   resources :cinemas
   resources :movies do
     resources :timetables, except: [:show, :index]

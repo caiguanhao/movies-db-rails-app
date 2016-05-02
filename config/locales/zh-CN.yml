@@ -5,6 +5,7 @@ zh-CN:
       movie: "电影"
       user: "用户"
       comment: "影评"
+      message: "消息"
     attributes:
       cinema:
         name: "影院名"
@@ -30,3 +31,6 @@ zh-CN:
         intro: "个人介绍"
       comment:
         rating: "我的评分"
+      message:
+        topic: "标题"
+        body: "内容"

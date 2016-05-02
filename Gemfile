@@ -12,6 +12,8 @@ gem 'bootstrap_form', '~> 2.3.0'
 gem 'devise'
 gem 'bcrypt', '~> 3.1.7'
 
+gem 'acts-as-messageable'
+
 group :development do
   gem 'spring'
 end
