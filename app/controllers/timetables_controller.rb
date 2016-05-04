@@ -46,6 +46,10 @@ class TimetablesController < ApplicationController
     end
 
     def timetable_params
-      params.require(:timetable).permit(:date, :time, :cinema_id, :room)
+      Timetable::PRICE_PROVIDERS.each do |name, display_name|
+        params[:timetable][:prices][name] = params[:timetable][:prices][name].presence || 0
+      end
+      params[:timetable][:prices] = params[:timetable][:prices].to_json
+      params.require(:timetable).permit(:date, :time, :cinema_id, :room, :prices)
     end
 end

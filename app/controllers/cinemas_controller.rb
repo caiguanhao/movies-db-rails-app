@@ -48,6 +48,22 @@ class CinemasController < ApplicationController
     redirect_to cinemas_url, notice: '影院已删除。'
   end
 
+  helper_method :price_tags
+
+  def price_tags(prices_json)
+    prices = JSON.parse(prices_json)
+    tags = ''
+    Timetable::PRICE_PROVIDERS.each do |name, display_name|
+      value = prices[name.to_s]
+      if value
+        tags << view_context.content_tag(:div, class: 'movie-price') do
+          (display_name + '：' + view_context.content_tag(:span, value, class: 'movie-price-number')).html_safe
+        end
+      end
+    end
+    tags.html_safe
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cinema

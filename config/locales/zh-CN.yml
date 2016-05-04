@@ -33,6 +33,8 @@ zh-CN:
         time: "时间"
         cinema_id: "影院"
         room: "影厅"
+        prices[baidu]: "糯米价格"
+        prices[meituan]: "美团价格"
       user:
         email: "E-mail"
         password: "密码"

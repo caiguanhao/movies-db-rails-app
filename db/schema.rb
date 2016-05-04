@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160502122914) do
+ActiveRecord::Schema.define(version: 20160504104525) do
 
   create_table "cinemas", force: :cascade do |t|
     t.string   "name"
@@ -79,9 +79,10 @@ ActiveRecord::Schema.define(version: 20160502122914) do
     t.integer  "cinema_id"
     t.date     "date"
     t.time     "time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
     t.string   "room"
+    t.string   "prices",     default: "{}", null: false
   end
 
   add_index "timetables", ["cinema_id"], name: "index_timetables_on_cinema_id"

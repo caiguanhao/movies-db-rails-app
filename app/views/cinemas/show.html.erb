@@ -74,6 +74,9 @@
                         </td>
                         <td class="ctt-3">
                           <span><%= t.room %></span>
+                        </td>
+                        <td class="ctt-4">
+                          <%= price_tags t.prices %>
                           <% if is_admin? %>
                             <%= link_to '编辑', edit_movie_timetable_path(tt.movie, t) %>
                             <%= link_to '删除', movie_timetable_path(tt.movie, t), method: :delete %>
