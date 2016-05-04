@@ -84,3 +84,9 @@ body {
 .alerts .alert-dismissible .close {
   right: -4px;
 }
+[data-city-select] > *:first-child {
+  padding-right: 7.5px;
+}
+[data-city-select] > *:last-child {
+  padding-left: 7.5px;
+}
