@@ -87,6 +87,6 @@ body {
 [data-city-select] > *:first-child {
   padding-right: 7.5px;
 }
-[data-city-select] > *:last-child {
+[data-city-select] > *:last-child:not(:first-child) {
   padding-left: 7.5px;
 }
