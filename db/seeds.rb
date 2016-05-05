@@ -47,25 +47,37 @@ prices = [
   [ [25, 30], [30, 28], [30, 25], [25, 30], [28, 28], [30, 28], [30, 25] ],
 ]
 
-Movie.all.each.with_index do |movie, i|
+values_collection = []
+count = 0
+
+Movie.all.select(:id).pluck(:id).each.with_index do |movie_id, i|
   dates[i % dates.size].each do |date|
-    Cinema.all.order("RANDOM()").limit(Cinema.count * 2 / 3).each.with_index do |cinema, j|
+    Cinema.all.select(:id).order("RANDOM()").limit(Cinema.count * 2 / 3).pluck(:id).each.with_index do |cinema_id, j|
       timeidx = (i + j) % times.size
       times[timeidx].each.with_index do |time, k|
-        Timetable.create(
-          date: date,
-          time: time,
-          cinema: cinema,
-          movie: movie,
-          room: rooms[timeidx][k],
-          prices: {
+        values_collection[count/500] ||= []
+        values_collection[count/500] << '(' + [
+          date,
+          time,
+          cinema_id,
+          movie_id,
+          rooms[timeidx][k],
+          {
             baidu: prices[timeidx][k][0],
             meituan: prices[timeidx][k][1],
           }.to_json,
-        )
+          Time.current,
+          Time.current,
+        ].map{|i|ActiveRecord::Base.connection.quote(i)}.join(', ') + ')'
+        count += 1
       end
     end
   end
+end
+
+values_collection.each do |values|
+  sql = %{INSERT INTO "timetables" ("date", "time", "cinema_id", "movie_id", "room", "prices", "created_at", "updated_at") VALUES #{values.join(", ")}}
+  ActiveRecord::Base.connection.execute sql
 end
 
 Comment.create(user: user, movie: Movie.first, rating: 4, content:
