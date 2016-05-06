@@ -63,8 +63,12 @@
     <ul class="nav nav-tabs">
       <li class="no-link"><a>上映影院</a></li>
       <% @dates.each.with_index do |date, i| %>
-        <li class="<%= i == 0 && ' active' || '' %>"><a href="#date-<%= date %>" data-toggle="tab"><%= date %></a></li>
+        <li class="<%= i == 0 && ' active' || '' %>"><a href="#date-<%= date %>" data-toggle="tab" class="movie-timetable-date"><%= date %></a></li>
       <% end %>
+      <li class="dropdown pull-right">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span id="timetables-district">选择地区</span> <span class="caret"></span></a>
+        <ul id="timetables-districts" class="dropdown-menu"></ul>
+      </li>
     </ul>
     <div class="tab-content">
       <% if @dates.length == 0 %>
@@ -74,9 +78,9 @@
         <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>">
           <table class="table movie-timetable">
             <tbody>
-              <% @movie.timetables.where(date: date).group_by(&:cinema_id).each do |_, tts| %>
+              <% @timetables_by_date[i].each do |_, tts| %>
                 <% tt = tts[0] %>
-                <tr>
+                <tr data-district="<%= tt.cinema.district %>">
                   <td>
                     <%= link_to tt.cinema do %>
                       <%= image_tag tt.cinema.logo, width: 102, height: 44 %>
@@ -84,7 +88,7 @@
                   </td>
                   <td><%= link_to tt.cinema.name, tt.cinema %></td>
                   <td><%= tt.date.strftime('%F') %></td>
-                  <td><%= tts.map(&:time).minmax.map{|t|t.strftime('%T')}.join(' - ') %></td>
+                  <td class="text-right"><%= tts.map(&:time).minmax.map{|t|t.strftime('%T')}.join(' - ') %></td>
                 </tr>
               <% end %>
             </tbody>
@@ -94,6 +98,45 @@
     </div>
   </div>
 </div>
+<script>
+(function () {
+  var preferredDistrict = localStorage.selectedDistrict;
+  function updateTimetableDistricts () {
+    var districts = $.grep($.unique(
+      $('.movie-timetables .tab-pane.active tr[data-district]').map(function() {
+        return $(this).data('district');
+      })), function (item) {
+      return !!item;
+    });
+    districts.sort();
+    $('#timetables-districts').empty();
+    $.each(districts, function (i, district) {
+      var count = $('.movie-timetables .tab-pane.active tr[data-district="' + district + '"]').length;
+      $('#timetables-districts').append('<li><a href data-district="' + district + '">' + district + ' (' + count + ')</a></li>');
+    });
+    $(document).on('click', '#timetables-districts a', function (e) {
+      e.preventDefault();
+      var district = $(this).data('district');
+      $('#timetables-district').text(district);
+      $('.movie-timetables .tab-pane.active tr[data-district]').addClass('hide');
+      $('.movie-timetables .tab-pane.active tr[data-district="' + district + '"]').removeClass('hide');
+      preferredDistrict = district;
+      if (localStorage) {
+        localStorage.selectedDistrict = district;
+      }
+    });
+    if (preferredDistrict) {
+      $('#timetables-districts a[data-district="' + preferredDistrict + '"]').click();
+    } else {
+      $('#timetables-districts a:first').click();
+    }
+  }
+  $('.movie-timetable-date').on('shown.bs.tab', function (e) {
+    updateTimetableDistricts();
+  });
+  updateTimetableDistricts();
+})();
+</script>
 
 <div class="row movie-comments">
   <div class="col-sm-12">

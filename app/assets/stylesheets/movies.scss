@@ -6,12 +6,16 @@
   padding-top: 20px;
   padding-bottom: 20px;
 }
-.movie-timetable tbody tr:first-child td,
-.movie-comment tbody tr:first-child td {
-  border-top-width: 0;
+.movie-timetable tbody tr td,
+.movie-comment tbody tr td {
+  border-top: 0;
+  border-bottom: 1px solid #ddd;
 }
 .movie-timetable td {
   vertical-align: middle !important;
+}
+.movie-timetable tbody tr.hide {
+  display: none;
 }
 .movie-timetable-none {
   padding: 10px;
