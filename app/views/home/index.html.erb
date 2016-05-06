@@ -60,6 +60,7 @@
     $.getJSON('/cinemas.json', { district: district }).then(function (data) {
       $('#c-current').text(district || '默认');
       $('#c-list').empty();
+      $('.c-selects').hide();
       $.each(data, function (_, cinema) {
         $('#c-list').append('<li><a href="' + cinema.link + '">' + cinema.name + '</a></li>');
       });

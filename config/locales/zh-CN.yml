@@ -20,6 +20,7 @@ zh-CN:
         name: "电影名"
         alias: "英文名"
         year: "年份"
+        release_date: "上映日期"
         poster: "海报"
         content: "电影介绍"
         star: "主演"

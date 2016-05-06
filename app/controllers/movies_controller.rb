@@ -16,7 +16,7 @@ class MoviesController < ApplicationController
 
   # GET /movies/1
   def show
-    @dates = @movie.timetables.select(:date).uniq.where('date >= ?', Date.current).pluck(:date)
+    @dates = @movie.timetables.of_city(current_city).select(:date).uniq.where('date >= ?', Date.current).pluck(:date)
     @comments = @movie.comments.to_a
     @comment = @movie.comments.where(user: current_user).first || @movie.comments.new
   end
@@ -79,6 +79,7 @@ class MoviesController < ApplicationController
         :name,
         :alias,
         :year,
+        :release_date,
         :poster,
         :star,
         :director,

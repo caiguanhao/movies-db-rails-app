@@ -61,6 +61,9 @@
       <% end %>
     </ul>
     <div class="tab-content">
+      <% if @dates.length == 0 %>
+        <p class="movie-timetable-none">当前城市没有影院上映这部电影。</p>
+      <% end %>
       <% @dates.each.with_index do |date, i| %>
         <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>">
           <table class="table movie-timetable">

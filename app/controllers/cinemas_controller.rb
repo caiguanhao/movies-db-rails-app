@@ -5,7 +5,7 @@ class CinemasController < ApplicationController
 
   # GET /cinemas
   def index
-    @cinemas = Cinema.all
+    @cinemas = Cinema.where(city: current_city)
     respond_to do |format|
       format.html
       format.json {

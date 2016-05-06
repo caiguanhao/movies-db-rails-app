@@ -1,4 +1,5 @@
 class Cinema < ActiveRecord::Base
+  has_many :movies, through: :timetables
   has_many :timetables
 
   validates_presence_of :name, message: '请输入影院名称'

@@ -19,14 +19,14 @@
  */
 .header {
   padding: 10px 0;
-  min-height: 50px;
+  min-height: 60px;
   box-sizing: content-box;
-  line-height: 50px;
+  line-height: 60px;
 }
 .header-search {
   line-height: normal;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 14px;
+  padding-bottom: 13px;
 }
 .header-link {
   border: 1px solid #ccc;
@@ -89,4 +89,60 @@ body {
 }
 [data-city-select] > *:last-child:not(:first-child) {
   padding-left: 7.5px;
+}
+.select-city {
+  margin-left: 10px;
+}
+.cities-list {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 480px;
+  line-height: 1.42857143;
+  display: none;
+  position: absolute;
+  left: 15px;
+  top: 70px;
+  background: #fff;
+  z-index: 99;
+}
+.cities-list.open {
+  display: block;
+}
+.cities-list-section {
+  display: none;
+}
+.cities-list-section.active {
+  display: block;
+}
+.cities-list-header {
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+  padding-top: 3px;
+  margin-bottom: 10px;
+}
+.cities-list-header-link {
+  padding: 2px 8px;
+  border-radius: 5px;
+}
+.cities-list-header-link:active,
+.cities-list-header-link:focus,
+.cities-list-header-link:hover {
+  text-decoration: none;
+}
+.cities-list-header-link.active {
+  background: #d9edf7;
+}
+.cities-list-section a {
+  margin-right: 13px;
+  margin-bottom: 2px;
+  white-space: nowrap;
+  display: inline-block;
+  font-size: 13px;
+}
+.cities-list-section-header {
+  border-bottom: 1px solid #ccc;
+  margin-top: 15px;
+  text-indent: 5px;
+  margin-bottom: 2px;
 }

@@ -3,6 +3,12 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  helper_method :current_city
+
+  def current_city
+    session[:city].presence || '杭州'
+  end
+
   after_filter :store_location
 
   def authenticate_admin!

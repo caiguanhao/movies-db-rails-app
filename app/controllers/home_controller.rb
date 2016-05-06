@@ -1,14 +1,25 @@
 class HomeController < ApplicationController
   def index
-    @movies_current = Movie.joins(:timetables).where('timetables.date': Date.current).uniq
+    if params[:city].present?
+      session[:city] = params[:city]
+      return redirect_to :back
+    end
+
+    @movies_current = Movie.
+      joins_timetables_and_cinemas.
+      where('timetables.date': Date.current).
+      where('cinemas.city': current_city).
+      uniq
     @movies_future = Movie.
-      joins(:timetables).
-      select('min(timetables.date) as release_date, movies.*').
+      joins_timetables_and_cinemas.
+      select('min(timetables.date) as first_timetable_date, movies.*').
+      where('cinemas.city': current_city).
       group(:id).
-      having('release_date > ?', Date.current).
-      order('release_date ASC').
+      having('first_timetable_date > ?', Date.current).
+      order('first_timetable_date ASC').
       to_a
     @cinemas_by_districts = Cinema.
+      where(city: current_city).
       select(:district).
       uniq.
       pluck(:district).

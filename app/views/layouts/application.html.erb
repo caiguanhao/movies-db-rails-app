@@ -17,9 +17,27 @@
   <div class="container">
     <div class="header row">
       <div class="col-sm-4">
-        <%= link_to root_path do %>
-          <%= image_tag 'logo.png', width: 90, height: 50 %>
-        <% end %>
+        <%= link_to root_path do %><%= image_tag 'logo.png', width: 108, height: 60 %><% end %>
+        <a href class="select-city"><%= current_city %></a>
+        <%= cities_list %>
+        <script>
+          $('.select-city').click(function (e) {
+            e.preventDefault();
+            $('.cities-list').toggleClass('open');
+            $(this).blur();
+          });
+          $('.cities-list .close').click(function (e) {
+            $('.cities-list').removeClass('open');
+          });
+          $('[data-select-key]').click(function (e) {
+            e.preventDefault();
+            var key = $(this).data('select-key');
+            $('[data-select-key]').removeClass('active');
+            $(this).addClass('active');
+            $('[data-key').removeClass('active');
+            $('[data-key="' + key + '"').addClass('active');
+          });
+        </script>
       </div><div class="header-search col-sm-4">
         <%= form_tag movies_path, method: :get do %>
           <div class="input-group">
