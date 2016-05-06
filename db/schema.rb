@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160506030008) do
+ActiveRecord::Schema.define(version: 20160506091002) do
 
   create_table "cinemas", force: :cascade do |t|
     t.string   "name"
@@ -63,8 +63,8 @@ ActiveRecord::Schema.define(version: 20160506030008) do
     t.string   "alias"
     t.integer  "year"
     t.string   "content"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
     t.string   "poster"
     t.string   "star"
     t.string   "director"
@@ -74,6 +74,8 @@ ActiveRecord::Schema.define(version: 20160506030008) do
     t.string   "aka"
     t.string   "genre"
     t.string   "release_date"
+    t.decimal  "ratings",       precision: 3, scale: 2, default: 0.0
+    t.integer  "ratings_count",                         default: 0
   end
 
   create_table "timetables", force: :cascade do |t|

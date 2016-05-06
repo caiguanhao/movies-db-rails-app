@@ -57,6 +57,9 @@
               <div class="tab-pane<%= i == 0 && ' active' || '' %>" id="date-<%= date %>-<%= tt.movie.id %>">
                 <h2>
                   <%= link_to tt.movie.name, tt.movie %>
+                  <small>
+                  <span class="label label-success"><%= tt.movie.ratings %></span>
+                  </small>
                   <% if is_admin? %>
                     <%= link_to '创建新时间', new_movie_timetable_path(tt.movie), class: 'btn btn-sm btn-default' %>
                   <% end %>

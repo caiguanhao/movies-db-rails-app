@@ -56,6 +56,13 @@
 .movie-comment-user {
   width: 200px;
 }
+.movie-comment-user a {
+  display: block;
+  width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .movie-comment-rating {
   width: 150px;
   text-align: center;
@@ -64,4 +71,26 @@
   font-weight: bold;
   font-size: 20px;
   color: #0582ff;
+}
+.movie-ratings {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  text-align: center;
+  padding: 10px 0 0;
+}
+.movie-ratings h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.movie-rating {
+  width: 90px;
+  height: 16px;
+  display: block;
+  margin: 5px 5px 8px;
+}
+.movie-ratings-bottom {
+  display: block;
+  background: #ddd;
+  padding: 2px;
+  font-size: 14px;
 }

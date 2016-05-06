@@ -3,6 +3,11 @@
     <%= image_tag @movie.poster, width: 270, height: 405, class: 'img-responsive' %>
   </div>
   <div class="col-sm-9">
+    <div class="movie-ratings pull-right">
+      <h2><%= @movie.ratings %></h2>
+      <span class="movie-rating comment-rating" data-rating="<%= @movie.ratings %>"></span>
+      <span class="movie-ratings-bottom">评分</span>
+    </div>
     <h2>
       <%= @movie.name %>
       <small>(<%= @movie.year %>)</small>
@@ -19,6 +24,7 @@
     <p>导演：<%= @movie.director %></p>
     <p>编剧：<%= @movie.writer %></p>
     <p>国家：<%= @movie.country %></p>
+    <p>上映：<%= @movie.release_date %></p>
     <p>片长：<%= @movie.runtime %>分钟</p>
     <p>又名：<%= @movie.aka %></p>
     <p>类型：<%= @movie.genre %></p>

@@ -1,17 +1,6 @@
-user = User.create(
-  email: 'a@a.com',
-  password: '123321',
-  name: 'test',
-  admin: true,
-  gender: '男',
-  astro: '狮子座',
-  city: '上海',
-  intro: '没有写。',
-  avatar: '/uploads/c01b5cbdeafc44925690519b76283ab2.jpg',
-)
-
 load __dir__ + "/seeds/movies.rb"
 load __dir__ + "/seeds/cinemas.rb"
+load __dir__ + "/seeds/comments.rb"
 
 today = Date.current
 
@@ -79,8 +68,3 @@ values_collection.each do |values|
   sql = %{INSERT INTO "timetables" ("date", "time", "cinema_id", "movie_id", "room", "prices", "created_at", "updated_at") VALUES #{values.join(", ")}}
   ActiveRecord::Base.connection.execute sql
 end
-
-Comment.create(user: user, movie: Movie.first, rating: 4, content:
-%{作为迪士尼少有的春季档动画，《疯狂动物城》所展现出来的意识和状态完全不是一部动画电影该有的样子。
-
-自2008年的《闪电狗》以来，有了皮克斯大只佬约翰·拉塞特的倾力执掌，新世代的迪士尼动画展现出非凡的进步与成就。2012年的《无敌破坏王》，2013年的《冰雪奇缘》，2014年的《超能陆战队》，无论是原创还是改编作品，都足以让任何喜爱动画的观众欢呼雀跃。在这一点上，隔壁的表现就显得非常的起伏不定（《森林战士》、《老雷斯的故事》），果然经验和认识才是比技术更为重要的精神内核。})
