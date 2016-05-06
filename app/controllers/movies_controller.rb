@@ -65,7 +65,11 @@ class MoviesController < ApplicationController
       @comment = @movie.comments.new(comment_params)
     end
     @comment.user_id = current_user.id
-    @comment.save
+    if @comment.save
+      flash[:notice] = "成功发表影评。"
+    else
+      flash[:error] = "无法发表影评。"
+    end
     redirect_to movie_path(@movie)
   end
 
