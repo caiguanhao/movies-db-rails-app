@@ -6,6 +6,25 @@ class CinemasController < ApplicationController
   # GET /cinemas
   def index
     @cinemas = Cinema.all
+    respond_to do |format|
+      format.html
+      format.json {
+        if params[:district].present?
+          @cinemas = @cinemas.where(district: params[:district])
+        else
+          @cinemas = @cinemas.
+            select('cinemas.*, COUNT(timetables.id) AS ttcount').
+            joins(:timetables).
+            group('cinemas.id').
+            order('ttcount DESC').
+            limit(10)
+        end
+        render json: @cinemas.select(:id, :name).as_json.map { |cinema|
+          cinema['link'] = cinema_path(cinema['id'])
+          cinema
+        }
+      }
+    end
   end
 
   # GET /cinemas/1

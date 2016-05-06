@@ -8,11 +8,10 @@ class HomeController < ApplicationController
       having('release_date > ?', Date.current).
       order('release_date ASC').
       to_a
-    @cinemas = Cinema.
-      select('cinemas.*, COUNT(timetables.id) AS ttcount').
-      joins(:timetables).
-      group('cinemas.id').
-      order('ttcount DESC').
-      limit(10)
+    @cinemas_by_districts = Cinema.
+      select(:district).
+      uniq.
+      pluck(:district).
+      reject(&:empty?)
   end
 end

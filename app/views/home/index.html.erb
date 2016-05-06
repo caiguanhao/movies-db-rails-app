@@ -34,11 +34,42 @@
     </script>
   </div>
   <div class="col-sm-3">
-    <h4>影院</h4>
-    <ul class="home-cinemas-list">
-      <% @cinemas.each do |cinema| %>
-        <li><%= link_to cinema.name, cinema %></li>
+    <h4>影院 <small><a href id="c-current">默认</a></small></h4>
+    <div class="c-selects">
+      <button type="button" class="close">&times;</button>
+      <a href data-district>默认</a>
+      <% @cinemas_by_districts.each do |district| %>
+        <a href data-district="<%= district %>"><%= district %></a>
       <% end %>
-    </ul>
+    </div>
+    <ul class="home-cinemas-list" id="c-list"></ul>
   </div>
 </div>
+<script>
+  $('#c-current').click(function (e) {
+    e.preventDefault();
+    $('.c-selects').toggle();
+  });
+  $('.c-selects .close').click(function (e) {
+    e.preventDefault();
+    $('.c-selects').hide();
+  });
+  $('[data-district]').click(function (e) {
+    e.preventDefault();
+    var district = $(this).data('district');
+    $.getJSON('/cinemas.json', { district: district }).then(function (data) {
+      $('#c-current').text(district || '默认');
+      $('#c-list').empty();
+      $.each(data, function (_, cinema) {
+        $('#c-list').append('<li><a href="' + cinema.link + '">' + cinema.name + '</a></li>');
+      });
+      if (localStorage) {
+        localStorage.selectedDistrict = district;
+      }
+    });
+  });
+  var def = localStorage ? localStorage.selectedDistrict : '';
+  var elem = $('[data-district="' + def + '"]');
+  if (elem.length === 0) elem = $('[data-district]').first();
+  elem.click();
+</script>
