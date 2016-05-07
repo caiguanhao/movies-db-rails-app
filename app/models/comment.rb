@@ -4,7 +4,7 @@ class Comment < ActiveRecord::Base
 
   validates_numericality_of :rating, only_integer: true, less_than_or_equal_to: 5, greater_than_or_equal_to: 1
 
-  after_save do
+  after_commit do
     _count = movie.comments.count
     _sum = movie.comments.sum(:rating)
     movie.update_attributes({

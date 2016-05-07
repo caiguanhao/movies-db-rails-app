@@ -10,5 +10,6 @@ Rails.application.routes.draw do
     resources :photos
     post :comments, on: :member, to: 'movies#new_comment'
     patch :comments, on: :member, to: 'movies#new_comment'
+    delete :comments, on: :member, to: 'movies#delete_comment'
   end
 end

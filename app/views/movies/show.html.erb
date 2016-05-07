@@ -67,7 +67,7 @@
 <div class="row movie-timetables">
   <div class="col-sm-12">
     <ul class="nav nav-tabs">
-      <li class="no-link"><a>上映影院</a></li>
+      <li class="no-link"><a name="cinemas">上映影院</a></li>
       <% @dates.each.with_index do |date, i| %>
         <li class="<%= i == 0 && ' active' || '' %>"><a href="#date-<%= date %>" data-toggle="tab" class="movie-timetable-date"><%= date %></a></li>
       <% end %>
@@ -147,7 +147,7 @@
 <div class="row movie-comments">
   <div class="col-sm-12">
     <ul class="nav nav-tabs">
-      <li class="no-link"><a>影评</a></li>
+      <li class="no-link"><a name="comments">影评</a></li>
     </ul>
     <div class="tab-content">
       <div class="tab-pane active">
@@ -166,7 +166,12 @@
                     <span class="comment-rating" data-rating="<%= comment.rating %>"></span>
                     <%= time_ago_in_words comment.updated_at %>
                   </td>
-                  <td><%= simple_format comment.content %></td>
+                  <td>
+                    <%= simple_format comment.content %>
+                    <% if is_admin? %>
+                      <%= link_to '删除', comments_movie_path(@movie, comment_id: comment.id), method: :delete, data: { confirm: '确认删除？' } %>
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
             <% else %>
