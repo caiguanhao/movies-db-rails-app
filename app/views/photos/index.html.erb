@@ -15,7 +15,7 @@
   <ul class="nav nav-tabs">
     <% active = ' class="active"'.html_safe %>
     <% Photo::TYPES.each do |type, display| %>
-      <% next if @photos[type].empty? %>
+      <% next if @photos[type].nil? or @photos[type].empty? %>
       <li<%= active %>><a href="#<%= type %>" data-toggle="tab" class="change-photo-type"><%= "#{display} (#{@photos[type].size})" %></a></li>
       <% active = '' %>
     <% end %>
@@ -23,7 +23,7 @@
   <div class="tab-content">
     <% active = ' active' %>
     <% Photo::TYPES.each do |type, display| %>
-      <% next if @photos[type].empty? %>
+      <% next if @photos[type].nil? or @photos[type].empty? %>
       <div class="photos tab-pane<%= active %>" id="<%= type %>">
         <% @photos[type].each do |photo| %>
           <%= link_to big_photo_url(photo), class: 'photo', data: { gallery: type, title: photo.title } do %>
