@@ -108,11 +108,11 @@
 (function () {
   var preferredDistrict = localStorage.selectedDistrict;
   function updateTimetableDistricts () {
-    var districts = $.grep($.unique(
-      $('.movie-timetables .tab-pane.active tr[data-district]').map(function() {
-        return $(this).data('district');
-      })), function (item) {
-      return !!item;
+    var districts = $('.movie-timetables .tab-pane.active tr[data-district]').map(function() {
+      return $(this).data('district');
+    });
+    districts = $.grep(districts, function (item, key) {
+      return !!item && $.inArray(item, districts) === key;
     });
     districts.sort();
     $('#timetables-districts').empty();
