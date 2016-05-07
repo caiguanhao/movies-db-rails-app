@@ -14,6 +14,7 @@
  *= require jquery.rateyo
  *= require slick
  *= require slick-theme
+ *= require ekko-lightbox
  *= require_tree .
  *= require_self
  */

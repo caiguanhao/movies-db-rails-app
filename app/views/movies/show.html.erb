@@ -29,6 +29,12 @@
     <p>又名：<%= @movie.aka %></p>
     <p>类型：<%= @movie.genre %></p>
     <%= simple_format @movie.content %>
+    <div class="movie-photo-block">
+      <% @photos.each do |photo| %>
+        <%= movie_image_tag photo, class: 'movie-photo', width: 100, height: 100 %>
+      <% end %>
+      <%= link_to '查看所有图片', movie_photos_path(@movie), class: 'movie-photo-more' %>
+    </div>
     <div class="col-sm-8 movie-comment-block">
       <% if user_signed_in? %>
         <%= bootstrap_form_for @comment, url: comments_movie_path(@movie) do |f| %>

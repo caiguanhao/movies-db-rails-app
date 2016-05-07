@@ -98,3 +98,31 @@
   padding: 2px;
   font-size: 14px;
 }
+.movie-photo-block {
+  font-size: 0;
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+}
+.movie-photo {
+  display: inline-block;
+  margin-right: 3px;
+}
+.movie-photo-more {
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 0;
+  line-height: 100px;
+  text-align: right;
+  padding-right: 20px;
+}
+a.movie-photo-more:hover {
+  text-decoration: none;
+  font-size: 14px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.8) 50%, white 100%);
+}

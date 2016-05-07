@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160506091002) do
+ActiveRecord::Schema.define(version: 20160507030524) do
 
   create_table "cinemas", force: :cascade do |t|
     t.string   "name"
@@ -77,6 +77,18 @@ ActiveRecord::Schema.define(version: 20160506091002) do
     t.decimal  "ratings",       precision: 3, scale: 2, default: 0.0
     t.integer  "ratings_count",                         default: 0
   end
+
+  create_table "photos", force: :cascade do |t|
+    t.integer  "movie_id"
+    t.string   "title"
+    t.string   "photo_type"
+    t.string   "url"
+    t.string   "url_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "photos", ["movie_id"], name: "index_photos_on_movie_id"
 
   create_table "timetables", force: :cascade do |t|
     t.integer  "movie_id"

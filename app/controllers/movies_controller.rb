@@ -20,6 +20,7 @@ class MoviesController < ApplicationController
     @timetables_by_date = @dates.map{|date| @movie.timetables.includes(:cinema).where(date: date).order(cinema_id: :asc).group_by(&:cinema_id) }
     @comments = @movie.comments.order(updated_at: :desc)
     @comment = @movie.comments.where(user: current_user).first || @movie.comments.new
+    @photos = @movie.photos.order(id: :asc).limit(10)
   end
 
   # GET /movies/new

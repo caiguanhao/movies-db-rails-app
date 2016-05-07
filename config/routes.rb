@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :cinemas
   resources :movies do
     resources :timetables, except: [:show, :index]
+    resources :photos
     post :comments, on: :member, to: 'movies#new_comment'
     patch :comments, on: :member, to: 'movies#new_comment'
   end

@@ -1,0 +1,49 @@
+<h2>
+  <%= link_to @movie.name, @movie %>
+  <small>(<%= @movie.year %>)</small>
+  图片
+  <% if is_admin? %>
+    <div class="btn-group">
+      <%= link_to '新增电影', new_movie_path(@movie), class: 'btn btn-sm btn-default' %>
+      <%= link_to '编辑电影', edit_movie_path(@movie), class: 'btn btn-sm btn-default' %>
+      <%= link_to '新增时间', new_movie_timetable_path(@movie), class: 'btn btn-sm btn-default' %>
+    </div>
+  <% end %>
+</h2>
+
+<div class="movie-photos-all">
+  <ul class="nav nav-tabs">
+    <% active = ' class="active"'.html_safe %>
+    <% Photo::TYPES.each do |type, display| %>
+      <% next if @photos[type].empty? %>
+      <li<%= active %>><a href="#<%= type %>" data-toggle="tab" class="change-photo-type"><%= "#{display} (#{@photos[type].size})" %></a></li>
+      <% active = '' %>
+    <% end %>
+  </ul>
+  <div class="tab-content">
+    <% active = ' active' %>
+    <% Photo::TYPES.each do |type, display| %>
+      <% next if @photos[type].empty? %>
+      <div class="photos tab-pane<%= active %>" id="<%= type %>">
+        <% @photos[type].each do |photo| %>
+          <%= link_to big_photo_url(photo), class: 'photo', data: { gallery: type, title: photo.title } do %>
+            <%= movie_image_tag photo, lazy: active.empty?, width: 100, height: 100 %>
+          <% end %>
+        <% end %>
+      </div>
+      <% active = '' %>
+    <% end %>
+  </div>
+</div>
+<script>
+$('.change-photo-type').on('shown.bs.tab', function (e) {
+  $('.photos.tab-pane.active img[data-src]').each(function () {
+    $(this).prop('src', $(this).data('src'));
+    $(this).removeAttr('data-src');
+  });
+});
+$(document).delegate('.photo', 'click', function(event) {
+  event.preventDefault();
+  $(this).ekkoLightbox();
+});
+</script>

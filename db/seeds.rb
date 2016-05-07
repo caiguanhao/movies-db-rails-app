@@ -1,4 +1,5 @@
 load __dir__ + "/seeds/movies.rb"
+load __dir__ + "/seeds/photos.rb"
 load __dir__ + "/seeds/cinemas.rb"
 load __dir__ + "/seeds/comments.rb"
 
