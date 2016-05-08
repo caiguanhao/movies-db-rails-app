@@ -37,7 +37,7 @@ class MoviesController < ApplicationController
     @movie = Movie.new(movie_params)
 
     if @movie.save
-      redirect_to @movie, notice: 'Movie was successfully created.'
+      redirect_to @movie, notice: '成功创建电影。'
     else
       render :new
     end
@@ -46,7 +46,7 @@ class MoviesController < ApplicationController
   # PATCH/PUT /movies/1
   def update
     if @movie.update(movie_params)
-      redirect_to @movie, notice: 'Movie was successfully updated.'
+      redirect_to @movie, notice: '成功更新电影。'
     else
       render :edit
     end
@@ -55,7 +55,7 @@ class MoviesController < ApplicationController
   # DELETE /movies/1
   def destroy
     @movie.destroy
-    redirect_to movies_url, notice: 'Movie was successfully destroyed.'
+    redirect_to movies_url, notice: '成功删除电影。'
   end
 
   def new_comment
@@ -111,12 +111,13 @@ class MoviesController < ApplicationController
     end
 
     def movie_params
-      params.require(:movie).permit(
+      permitted = params.require(:movie).permit(
         :name,
         :alias,
         :year,
         :release_date,
         :poster,
+        :poster_file,
         :star,
         :director,
         :writer,
@@ -126,6 +127,10 @@ class MoviesController < ApplicationController
         :genre,
         :content,
       )
+      poster = upload_image(permitted['poster_file'], sub_dir = 'posters', resize = '350x525!>')
+      permitted.delete('poster_file')
+      permitted['poster'] = poster if poster
+      permitted
     end
 
     def comment_params

@@ -7,6 +7,8 @@ gem 'uglifier', '>= 1.3.0'
 
 gem 'therubyracer', platforms: :ruby
 
+gem 'mini_magick'
+
 gem 'bootstrap_form', '~> 2.3.0'
 
 gem 'devise'

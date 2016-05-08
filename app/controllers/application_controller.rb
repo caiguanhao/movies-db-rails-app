@@ -44,4 +44,31 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for(resource)
     session[:previous_url] || root_path
   end
+
+  def upload_image(fileobj, sub_dir = '', resize = '')
+    if fileobj.is_a? ActionDispatch::Http::UploadedFile
+      ext = File.extname(fileobj.original_filename).downcase
+      if ['.jpg', '.png', '.gif', '.jpeg'].include? ext
+        md5 = Digest::MD5.new
+        tmpdir = Rails.root.join('public', 'uploads', sub_dir)
+        FileUtils.mkdir_p(tmpdir) if not File.directory?(tmpdir)
+        file = Tempfile.new('file', tmpdir = tmpdir, encoding: 'ascii-8bit')
+        content = fileobj.read
+        md5.update content
+        file.write content
+        file.close
+        filename = md5.hexdigest + ext
+        final_path = Rails.root.join('public', 'uploads', sub_dir, filename)
+        if resize.empty?
+          File.rename file.path, final_path
+        else
+          image = MiniMagick::Image.open(file.path)
+          image.resize resize
+          image.write final_path
+        end
+        return File.join('/uploads', sub_dir, filename)
+      end
+    end
+    nil
+  end
 end

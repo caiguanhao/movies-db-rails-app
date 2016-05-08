@@ -41,12 +41,14 @@
     <p>又名：<%= @movie.aka %></p>
     <p>类型：<%= @movie.genre %></p>
     <%= simple_format @movie.content %>
-    <div class="movie-photo-block">
-      <% @photos.each do |photo| %>
-        <%= movie_image_tag photo, class: 'movie-photo', width: 100, height: 100 %>
-      <% end %>
-      <%= link_to '查看所有图片', movie_photos_path(@movie), class: 'movie-photo-more' %>
-    </div>
+    <% if @photos.count > 0 %>
+      <div class="movie-photo-block">
+        <% @photos.each do |photo| %>
+          <%= movie_image_tag photo, class: 'movie-photo', width: 100, height: 100 %>
+        <% end %>
+        <%= link_to '查看所有图片', movie_photos_path(@movie), class: 'movie-photo-more' %>
+      </div>
+    <% end %>
     <div class="col-sm-8 movie-comment-block">
       <% if user_signed_in? %>
         <%= bootstrap_form_for @comment, url: comments_movie_path(@movie) do |f| %>
@@ -86,7 +88,7 @@
       <% @dates.each.with_index do |date, i| %>
         <li class="<%= i == 0 && ' active' || '' %>"><a href="#date-<%= date %>" data-toggle="tab" class="movie-timetable-date"><%= date %></a></li>
       <% end %>
-      <li class="dropdown pull-right">
+      <li class="dropdown pull-right" id="timetables-districts-container">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span id="timetables-district">选择地区</span> <span class="caret"></span></a>
         <ul id="timetables-districts" class="dropdown-menu"></ul>
       </li>
@@ -129,6 +131,11 @@
     districts = $.grep(districts, function (item, key) {
       return !!item && $.inArray(item, districts) === key;
     });
+    if (districts.length === 0) {
+      $('#timetables-districts-container').hide();
+      return;
+    }
+    $('#timetables-districts-container').show();
     districts.sort();
     $('#timetables-districts').empty();
     $.each(districts, function (i, district) {

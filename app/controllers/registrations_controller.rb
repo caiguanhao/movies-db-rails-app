@@ -15,22 +15,9 @@ class RegistrationsController < Devise::RegistrationsController
       account_update_params.delete('password')
       account_update_params.delete('password_confirmation')
       account_update_params.delete('current_password')
-      avatar = account_update_params['avatar']
-      if avatar
-        ext = File.extname(avatar.original_filename).downcase
-        if ['.jpg', '.png', '.gif', '.jpeg'].include? ext
-          md5 = Digest::MD5.new
-          file = Tempfile.new('avatar', tmpdir = Rails.root.join('public', 'uploads'), encoding: 'ascii-8bit')
-          content = avatar.read
-          md5.update content
-          file.write content
-          file.close
-          filename = md5.hexdigest + ext
-          puts file.path, Rails.root.join('public', 'uploads', filename)
-          File.rename file.path, Rails.root.join('public', 'uploads', filename)
-          account_update_params['avatar'] = '/uploads/' + filename
-        end
-      end
+      avatar = upload_image(account_update_params['avatar'], sub_dir = 'avatars', resize = '200x200!>')
+      account_update_params.delete('avatar')
+      account_update_params['avatar'] = avatar if avatar
       successfully_updated = @user.update_attributes(account_update_params)
     end
 

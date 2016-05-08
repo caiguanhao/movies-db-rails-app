@@ -17,4 +17,5 @@
 /tmp
 
 public/assets
+public/uploads
 vendor/bundle
