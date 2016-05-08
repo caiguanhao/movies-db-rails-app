@@ -11,5 +11,6 @@ Rails.application.routes.draw do
     post :comments, on: :member, to: 'movies#new_comment'
     patch :comments, on: :member, to: 'movies#new_comment'
     delete :comments, on: :member, to: 'movies#delete_comment'
+    delete :comment_by_id, on: :member, to: 'movies#delete_comment_by_id'
   end
 end

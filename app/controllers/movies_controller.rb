@@ -1,9 +1,9 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :edit, :update, :destroy, :new_comment, :delete_comment]
+  before_action :set_movie, only: [:show, :edit, :update, :destroy, :new_comment, :delete_comment, :delete_comment_by_id]
 
-  before_action :authenticate_user!, only: [:new_comment]
+  before_action :authenticate_user!, only: [:new_comment, :delete_comment]
 
-  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :delete_comment]
+  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :delete_comment_by_id]
 
   # GET /movies
   def index
@@ -75,6 +75,16 @@ class MoviesController < ApplicationController
   end
 
   def delete_comment
+    @comment = @movie.comments.where(user: current_user).first
+    if @comment.destroy
+      flash[:notice] = "成功删除影评。"
+    else
+      flash[:error] = "无法删除影评。"
+    end
+    redirect_to movie_path(@movie)
+  end
+
+  def delete_comment_by_id
     @comment = @movie.comments.find(params[:comment_id])
     if @comment.destroy
       flash[:notice] = "成功删除影评。"
