@@ -10,6 +10,7 @@ zh-CN:
     attributes:
       cinema:
         name: "影院名"
+        logo: "标志"
         city: "影院所在城市"
         district: "影院所在区域"
         address: "地址"

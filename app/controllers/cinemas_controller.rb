@@ -91,6 +91,10 @@ class CinemasController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def cinema_params
-      params.require(:cinema).permit(:name, :city, :content, :address, :phone, :business_hours)
+      permitted = params.require(:cinema).permit(:name, :logo, :logo_file, :city, :district, :content, :address, :phone, :business_hours)
+      logo = upload_image(permitted['logo_file'], sub_dir = 'logos', resize = '102x44!>')
+      permitted.delete('logo_file')
+      permitted['logo'] = logo if logo
+      permitted
     end
 end

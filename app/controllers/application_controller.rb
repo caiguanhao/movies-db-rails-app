@@ -65,6 +65,7 @@ class ApplicationController < ActionController::Base
           image = MiniMagick::Image.open(file.path)
           image.resize resize
           image.write final_path
+          file.unlink
         end
         return File.join('/uploads', sub_dir, filename)
       end

@@ -10,10 +10,11 @@
           <div class="btn-group">
             <%= link_to '新增影院', new_cinema_path(@cinema), class: 'btn btn-sm btn-default' %>
             <%= link_to '编辑影院', edit_cinema_path(@cinema), class: 'btn btn-sm btn-default' %>
+            <%= link_to '删除影院', cinema_path(@cinema), data: { method: 'delete' }, class: 'btn btn-sm btn-default' %>
           </div>
         <% end %>
       </h2>
-      <h5><%= @cinema.city %></h5>
+      <h5><%= @cinema.city %> <%= @cinema.district %></h5>
     </div>
   </div>
   <div class="col-sm-6 cinema-info">

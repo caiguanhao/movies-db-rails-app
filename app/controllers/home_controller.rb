@@ -23,6 +23,7 @@ class HomeController < ApplicationController
       select(:district).
       uniq.
       pluck(:district).
+      reject(&:nil?).
       reject(&:empty?)
   end
 end

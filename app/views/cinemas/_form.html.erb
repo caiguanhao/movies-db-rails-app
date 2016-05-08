@@ -1,5 +1,7 @@
 <%= bootstrap_form_for @cinema, layout: :horizontal do |f| %>
   <%= f.text_field :name %>
+  <%= f.text_field :logo, placeholder: '输入网址或者直接上传标志' %>
+  <%= f.file_field :logo_file, label: '上传标志' %>
   <%= f.text_field :city %>
   <%= f.text_field :district %>
   <%= f.text_field :address %>
