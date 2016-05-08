@@ -31,4 +31,22 @@ class User < ActiveRecord::Base
   validates_length_of :intro, maximum: 300, on: :update
   validates_inclusion_of :gender, in: GENDERS, allow_nil: true, on: :update
   validates_inclusion_of :astro, in: ASTROS, allow_nil: true, on: :update
+
+  def likeables_with(klass, like_type)
+    klass.where(id: Like.liked_by(self).where(likeable_type: klass.table_name.classify, like_type: like_type).select(:likeable_id))
+  end
+
+  def likes_with?(likeable, like_type)
+    _like = Like.liked_by(self).liking(likeable).last
+    _like.present? && _like.like_type == like_type
+  end
+
+  def like_with!(likeable, like_type)
+    ActiveRecord::Base.transaction do
+      self.like! likeable
+      _like = Like.liked_by(self).liking(likeable).last
+      _like.like_type = like_type
+      raise ActiveRecord::Rollback if !_like.save
+    end
+  end
 end

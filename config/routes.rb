@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   resources :movies do
     resources :timetables, except: [:show, :index]
     resources :photos
+    post :likes, on: :member, to: 'movies#like'
+    delete :likes, on: :member, to: 'movies#unlike'
     post :comments, on: :member, to: 'movies#new_comment'
     patch :comments, on: :member, to: 'movies#new_comment'
     delete :comments, on: :member, to: 'movies#delete_comment'

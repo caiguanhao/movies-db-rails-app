@@ -205,8 +205,15 @@ comments.reverse.each do |comment|
   )
 end
 
+Movie.order("RANDOM()").limit(6).each do |movie|
+  admin.like_with! movie, Movie::LIKE_TYPES.keys.sample
+end
+
 User.where(admin: nil).each do |user|
   admin.follow!(user)
+  Movie.order("RANDOM()").limit([*4..8].sample).each do |movie|
+    user.like_with! movie, Movie::LIKE_TYPES.keys.sample
+  end
 end
 
 User.where(admin: nil).order("RANDOM()").limit(10).each do |user|

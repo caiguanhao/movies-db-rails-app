@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160508005355) do
+ActiveRecord::Schema.define(version: 20160508075735) do
 
   create_table "cinemas", force: :cascade do |t|
     t.string   "name"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(version: 20160508005355) do
     t.string   "likeable_type"
     t.integer  "likeable_id"
     t.datetime "created_at"
+    t.string   "like_type"
   end
 
   add_index "likes", ["likeable_id", "likeable_type"], name: "fk_likeables"

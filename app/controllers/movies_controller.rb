@@ -1,7 +1,7 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :edit, :update, :destroy, :new_comment, :delete_comment, :delete_comment_by_id]
+  before_action :set_movie, except: [:index, :new, :create]
 
-  before_action :authenticate_user!, only: [:new_comment, :delete_comment]
+  before_action :authenticate_user!, only: [:new_comment, :delete_comment, :like, :unlike]
 
   before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :delete_comment_by_id]
 
@@ -92,6 +92,16 @@ class MoviesController < ApplicationController
       flash[:error] = "无法删除影评。"
     end
     redirect_to movie_path(@movie, anchor: :comments)
+  end
+
+  def like
+    current_user.like_with! @movie, params[:type]
+    redirect_to movie_path(@movie)
+  end
+
+  def unlike
+    current_user.unlike! @movie
+    redirect_to movie_path(@movie)
   end
 
   private

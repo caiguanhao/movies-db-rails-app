@@ -1,6 +1,18 @@
 <div class="row movie-info">
   <div class="col-sm-3">
     <%= image_tag @movie.poster, width: 270, height: 405, class: 'img-responsive' %>
+    <div class="movie-likes">
+      <div class="btn-group">
+        <% Movie::LIKE_TYPES.each do |type, type_text| %>
+          <% text = "#{type_text} (#{@movie.likes_with(type).count})" %>
+          <% if user_signed_in? && current_user.likes_with?(@movie, type) %>
+            <%= link_to text, likes_movie_path(@movie, type: type), class: "btn btn-default active", method: :delete %>
+          <% else %>
+            <%= link_to text, likes_movie_path(@movie, type: type), class: "btn btn-default", method: :post %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
   </div>
   <div class="col-sm-9">
     <div class="movie-ratings pull-right">

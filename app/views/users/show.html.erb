@@ -23,6 +23,52 @@
   </div>
 </div>
 
+<% wish_count = @user.likeables_with(Movie, 'wish').count %>
+<% watched_count = @user.likeables_with(Movie, 'watched').count %>
+
+<div class="row">
+  <div class="col-sm-6">
+    <ul class="nav nav-tabs">
+      <li class="no-link"><a>想看的电影 (<%= wish_count %>)</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <% if wish_count == 0 %>
+          <p class="user-none">当前没有想看的电影。</p>
+        <% else %>
+          <div class="user-movies">
+            <% @user.likeables_with(Movie, 'wish').each do |movie| %>
+              <%= link_to movie_path(movie), class: 'user-movie', data: { toggle: 'tooltip', placement: 'bottom', title: movie.name } do %>
+                <%= image_tag movie.poster, width: 60, height: 90 %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <ul class="nav nav-tabs">
+      <li class="no-link"><a>已看电影 (<%= watched_count %>)</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <% if watched_count == 0 %>
+          <p class="user-none">当前没有想看的电影。</p>
+        <% else %>
+          <div class="user-movies">
+            <% @user.likeables_with(Movie, 'watched').each do |movie| %>
+              <%= link_to movie_path(movie), class: 'user-movie', data: { toggle: 'tooltip', placement: 'bottom', title: movie.name } do %>
+                <%= image_tag movie.poster, width: 60, height: 90 %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
 <% followees_count = @user.followees(User).count %>
 <% followers_count = @user.followers(User).count %>
 
