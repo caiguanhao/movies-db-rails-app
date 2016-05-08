@@ -3,6 +3,10 @@ class User < ActiveRecord::Base
 
   acts_as_messageable required: :body
 
+  acts_as_liker
+  acts_as_follower
+  acts_as_followable
+
   has_many :comments
 
   GENDERS = ['男', '女']

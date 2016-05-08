@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   root to: "home#index"
   devise_for :users, :controllers => {:registrations => "registrations"}
   resources :users, :only => [:show] do
+    post :follows, to: 'users#follow'
+    delete :follows, to: 'users#unfollow'
     post :messages
   end
   resources :cinemas

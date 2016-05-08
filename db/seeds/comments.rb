@@ -204,3 +204,11 @@ comments.reverse.each do |comment|
     updated_at: comment[:date],
   )
 end
+
+User.where(admin: nil).each do |user|
+  admin.follow!(user)
+end
+
+User.where(admin: nil).order("RANDOM()").limit(10).each do |user|
+  user.follow!(admin)
+end

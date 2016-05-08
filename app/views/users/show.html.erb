@@ -8,6 +8,11 @@
         <h2>
           <%= @user.name || @user.email %>
           <% if current_user && @user != current_user %>
+            <% if current_user.follows?(@user) %>
+              <%= link_to "取消关注", user_follows_path(@user), method: :delete, class: 'userpage-action' %>
+            <% else %>
+              <%= link_to "关注此用户", user_follows_path(@user), method: :post, class: 'userpage-action' %>
+            <% end %>
             <%= link_to "发送消息", '#', data: { toggle: 'modal',  target: '#message' }, class: 'userpage-action' %>
           <% end %>
         </h2>
@@ -18,35 +23,90 @@
   </div>
 </div>
 
+<% followees_count = @user.followees(User).count %>
+<% followers_count = @user.followers(User).count %>
+
+<div class="row">
+  <div class="col-sm-6">
+    <ul class="nav nav-tabs">
+      <li class="no-link"><a>已关注 (<%= followees_count %>)</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <% if followees_count == 0 %>
+          <p class="user-none">当前没有关注任何人。</p>
+        <% else %>
+          <div class="user-follows">
+            <% @user.followees(User).each do |user| %>
+              <%= link_to user_path(user), class: 'user-follow', data: { toggle: 'tooltip', placement: 'bottom', title: user.name || user.email } do %>
+                <%= image_tag user.avatar || 'user.png', width: 32, height: 32, class: 'user-avatar' %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <ul class="nav nav-tabs">
+      <li class="no-link"><a>被关注 (<%= followers_count %>)</a></li>
+    </ul>
+    <div class="tab-content">
+      <div class="tab-pane active">
+        <% if followers_count == 0 %>
+          <p class="user-none">当前没有被任何人关注。</p>
+        <% else %>
+          <div class="user-follows">
+            <% @user.followers(User).each do |user| %>
+              <%= link_to user_path(user), class: 'user-follow', data: { toggle: 'tooltip', placement: 'bottom', title: user.name || user.email } do %>
+                <%= image_tag user.avatar || 'user.png', width: 32, height: 32, class: 'user-avatar' %>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(function () { $('[data-toggle="tooltip"]').tooltip(); });
+</script>
+
 <% if @user == current_user %>
+  <% received_messages_count = current_user.received_messages.count %>
   <div class="row">
     <div class="col-sm-12">
       <ul class="nav nav-tabs">
-        <li class="no-link"><a>我的消息 (<%= current_user.received_messages.count %>)</a></li>
+        <li class="no-link"><a>我的消息 (<%= received_messages_count %>)</a></li>
       </ul>
       <div class="tab-content">
         <div class="tab-pane active">
-          <table class="table">
-            <tbody>
-                <tr>
-                  <th width="20%">发送日期</th>
-                  <th width="20%">发件人</th>
-                  <th width="60%">内容</th>
-                </tr>
-            </tbody>
-            <tbody>
-              <% current_user.received_messages.each do |msg| %>
-                <tr>
-                  <td><%= msg.created_at.strftime('%F %T') %></td>
-                  <td><%= link_to msg.from.name || msg.from.email, user_path(msg.from) %></td>
-                  <td>
-                    <a href class="remove-hidden">显示</a>
-                    <span style="display: none"><%= simple_format msg.body %></span>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
+          <% if received_messages_count == 0 %>
+            <p class="user-none">当前没有个人消息。</p>
+          <% else %>
+            <table class="table">
+              <tbody>
+                  <tr>
+                    <th width="20%">发送日期</th>
+                    <th width="20%">发件人</th>
+                    <th width="60%">内容</th>
+                  </tr>
+              </tbody>
+              <tbody>
+                <% current_user.received_messages.each do |msg| %>
+                  <tr>
+                    <td><%= msg.created_at.strftime('%F %T') %></td>
+                    <td><%= link_to msg.from.name || msg.from.email, user_path(msg.from) %></td>
+                    <td>
+                      <a href class="remove-hidden">显示</a>
+                      <span style="display: none"><%= simple_format msg.body %></span>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          <% end %>
         </div>
       </div>
     </div>

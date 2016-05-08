@@ -14,6 +14,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'acts-as-messageable'
 
+gem 'socialization'
+
 gem 'puma'
 
 group :development do
