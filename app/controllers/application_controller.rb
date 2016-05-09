@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   def authenticate_admin!
     return if authenticate_user!.nil?
     if !is_admin?
-      flash[:error] = '用户没有管理员权限。'
+      flash[:error] = '用户没有管理员权限或页面不存在。'
       redirect_to root_path
     end
   end

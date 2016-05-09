@@ -1,6 +1,16 @@
 class UsersController < ApplicationController
-  before_action :set_user
-  before_action :authenticate_user!, except: [:show]
+  before_action :set_user, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show, :destroy]
+  before_action :authenticate_admin!, only: [:index, :destroy]
+
+  def index
+    @users = User.where.not(id: current_user.id).order(id: :desc)
+  end
+
+  def destroy
+    @user.destroy
+    redirect_to users_path
+  end
 
   def show
   end

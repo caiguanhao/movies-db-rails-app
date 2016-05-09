@@ -53,14 +53,19 @@
             <%= link_to current_user.name.presence || current_user.email, user_path(current_user), class: 'btn header-link' %>
             <%= link_to "设置", edit_user_registration_path, class: 'btn header-link' %>
             <% if is_admin? %>
-              <div class="btn-group" role="group">
+              <div class="btn-group header-admin-group" role="group">
                 <button type="button" class="btn header-link dropdown-toggle" data-toggle="dropdown">
                   管理
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu pull-right">
                   <li><%= link_to "电影列表", movies_path %></li>
+                  <li><%= link_to "新建电影", new_movie_path %></li>
+                  <li class="divider"></li>
                   <li><%= link_to "影院列表", cinemas_path %></li>
+                  <li><%= link_to "新建影院", new_cinema_path %></li>
+                  <li class="divider"></li>
+                  <li><%= link_to "用户列表", users_path %></li>
                 </ul>
               </div>
             <% end %>

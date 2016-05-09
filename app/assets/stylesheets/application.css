@@ -36,6 +36,12 @@
   line-height: 16px;
   background: #fff;
 }
+.header-admin-group .dropdown-menu {
+  margin-top: -2px !important;
+}
+.header-admin-group:hover .dropdown-menu {
+  display: block;
+}
 .header-signout {
   display: inline-block;
   margin-left: 10px;
