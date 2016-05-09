@@ -4,3 +4,4 @@ bundle install --path vendor/bundle --without development test
 RAILS_ENV=production bundle exec rake assets:precompile
 RAILS_ENV=production bundle exec rake db:migrate
 RAILS_ENV=production bundle exec rake db:seed
+RAILS_ENV=production RACK_ENV=production bundle exec puma -d -b tcp://127.0.0.1:34543
