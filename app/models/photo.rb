@@ -13,4 +13,10 @@ class Photo < ActiveRecord::Base
   URL_TYPES = {
     'mtime' => '时光网',
   }
+
+  before_save do
+    if self.url_type == 'mtime'
+      self.url = self.url.sub(/_.*\.jpg$/, '.jpg')
+    end
+  end
 end

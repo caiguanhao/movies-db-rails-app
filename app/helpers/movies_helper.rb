@@ -1,7 +1,8 @@
 module MoviesHelper
   def movie_image_tag(photo, options={})
     source = photo.url
-    if photo.url_type == 'mtime'
+    case photo.url_type
+    when 'mtime', 'photo'
       width = options[:width].presence || 100
       height = options[:height].presence || 100
       width *= 2

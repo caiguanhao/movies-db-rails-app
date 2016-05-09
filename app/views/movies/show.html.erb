@@ -123,7 +123,7 @@
 </div>
 <script>
 (function () {
-  var preferredDistrict = localStorage.selectedDistrict;
+  var preferredDistrict = localStorage ? localStorage.selectedDistrict : null;
   function updateTimetableDistricts () {
     var districts = $('.movie-timetables .tab-pane.active tr[data-district]').map(function() {
       return $(this).data('district');

@@ -1,4 +1,10 @@
 zh-CN:
+  helpers:
+    label:
+      photo:
+        title: "标题"
+        url: "路径"
+        photo_type: "类型"
   activerecord:
     models:
       cinema: "影院"

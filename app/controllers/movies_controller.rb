@@ -3,7 +3,7 @@ class MoviesController < ApplicationController
 
   before_action :authenticate_user!, only: [:new_comment, :delete_comment, :like, :unlike]
 
-  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :delete_comment_by_id]
+  before_action :authenticate_admin!, only: [:new, :edit, :create, :update, :destroy, :delete_comment_by_id, :add_photos]
 
   # GET /movies
   def index
@@ -94,6 +94,12 @@ class MoviesController < ApplicationController
     redirect_to movie_path(@movie, anchor: :comments)
   end
 
+  def add_photos
+    photo = @movie.photos.new(photo_params)
+    photo.save
+    redirect_to movie_photos_path(@movie, anchor: "_#{photo.photo_type}")
+  end
+
   def like
     current_user.like_with! @movie, params[:type]
     redirect_to movie_path(@movie)
@@ -130,6 +136,24 @@ class MoviesController < ApplicationController
       poster = upload_image(permitted['poster_file'], sub_dir = 'posters', resize = '350x525!>')
       permitted.delete('poster_file')
       permitted['poster'] = poster if poster
+      permitted
+    end
+
+    def photo_params
+      permitted = params.require(:photo).permit(
+        :title,
+        :url,
+        :url_file,
+        :photo_type,
+      )
+      photo = upload_image(permitted['url_file'], sub_dir = 'photos', resize = '200x200', crop = true)
+      permitted.delete('url_file')
+      if photo
+        permitted['url'] = photo
+        permitted['url_type'] = 'photo'
+      elsif permitted['url'] =~ /mtime\.cn/
+        permitted['url_type'] = 'mtime'
+      end
       permitted
     end
 

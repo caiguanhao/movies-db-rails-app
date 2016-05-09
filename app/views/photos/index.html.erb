@@ -11,39 +11,70 @@
   <% end %>
 </h2>
 
+<% if is_admin? %>
+  <div class="movie-photos-upload">
+    <%= bootstrap_form_for :photo, url: add_photos_movie_path(@movie), layout: :inline do |f| %>
+      <%= f.text_field :title %>
+      <%= f.select :photo_type, Photo::TYPES.invert.to_a, {}, id: 'photo_type' %>
+      <%= f.text_field :url %>
+      <%= f.file_field :url_file, skip_label: true %>
+      <%= f.form_group do %>
+        <%= f.submit "创建图片" %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
 <div class="movie-photos-all">
   <ul class="nav nav-tabs">
-    <% active = ' class="active"'.html_safe %>
     <% Photo::TYPES.each do |type, display| %>
       <% next if @photos[type].nil? or @photos[type].empty? %>
-      <li<%= active %>><a href="#<%= type %>" data-toggle="tab" class="change-photo-type"><%= "#{display} (#{@photos[type].size})" %></a></li>
-      <% active = '' %>
+      <li><a href="#<%= type %>" data-toggle="tab" data-type="<%= type %>" class="change-photo-type"><%= "#{display} (#{@photos[type].size})" %></a></li>
     <% end %>
   </ul>
   <div class="tab-content">
-    <% active = ' active' %>
     <% Photo::TYPES.each do |type, display| %>
       <% next if @photos[type].nil? or @photos[type].empty? %>
-      <div class="photos tab-pane<%= active %>" id="<%= type %>">
+      <div class="photos tab-pane" id="<%= type %>">
         <% @photos[type].each do |photo| %>
-          <%= link_to big_photo_url(photo), class: 'photo', data: { gallery: type, title: photo.title } do %>
-            <%= movie_image_tag photo, lazy: active.empty?, width: 100, height: 100 %>
-          <% end %>
+          <div class="photo">
+            <%= link_to big_photo_url(photo), class: 'photo-link', data: { gallery: type, title: photo.title } do %>
+              <%= movie_image_tag photo, lazy: true, width: 100, height: 100 %>
+            <% end %>
+            <% if is_admin? %>
+              <%= link_to '删除', movie_photo_path(movie_id: @movie.id, id: photo.id), method: :delete, data: { confirm: '确认删除？' } %>
+            <% end %>
+          </div>
         <% end %>
       </div>
-      <% active = '' %>
     <% end %>
   </div>
 </div>
 <script>
 $('.change-photo-type').on('shown.bs.tab', function (e) {
+  if ($(this).index('.change-photo-type') === 0) {
+    window.location.hash = '';
+  } else {
+    window.location.hash = '_' + $(this).data('type');
+  }
+  $('#photo_type').val($(this).data('type'));
   $('.photos.tab-pane.active img[data-src]').each(function () {
     $(this).prop('src', $(this).data('src'));
     $(this).removeAttr('data-src');
   });
 });
-$(document).delegate('.photo', 'click', function(event) {
+$(document).delegate('.photo-link', 'click', function(event) {
   event.preventDefault();
   $(this).ekkoLightbox();
 });
+function hashChange () {
+  var type = window.location.hash.slice(2);
+  var tab = $('.change-photo-type[data-type="' + type + '"]');
+  if (tab.length === 0) {
+    tab = $('.change-photo-type').first();
+  }
+  tab.tab('show');
+}
+window.addEventListener('hashchange', hashChange, false);
+hashChange();
 </script>
