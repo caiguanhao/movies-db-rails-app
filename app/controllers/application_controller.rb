@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
           image = MiniMagick::Image.open(file.path)
           if crop
             FileUtils.cp file.path, final_path
-            resized_filename = md5.hexdigest + '_' + resize + ext
+            resized_filename = md5.hexdigest + '_' + resize.gsub('x', 'X') + ext
             resized_final_path = Rails.root.join('public', 'uploads', sub_dir, resized_filename)
             m = RE.match(resize)
             width  = (m[1] || m[2]).to_f
