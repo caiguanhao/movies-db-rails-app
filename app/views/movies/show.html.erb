@@ -28,6 +28,7 @@
           <%= link_to '新增电影', new_movie_path(@movie), class: 'btn btn-sm btn-default' %>
           <%= link_to '编辑电影', edit_movie_path(@movie), class: 'btn btn-sm btn-default' %>
           <%= link_to '新增时间', new_movie_timetable_path(@movie), class: 'btn btn-sm btn-default' %>
+          <%= link_to '图片管理', movie_photos_path(@movie), class: 'btn btn-sm btn-default' %>
         </div>
       <% end %>
     </h2>
@@ -177,6 +178,7 @@
           <tbody>
             <% if @comments.size > 0 %>
               <% @comments.each do |comment| %>
+                <% next if !comment.user %>
                 <tr>
                   <td class="movie-comment-user">
                     <%= link_to user_path(comment.user) do %>

@@ -29,7 +29,7 @@ class CinemasController < ApplicationController
 
   # GET /cinemas/1
   def show
-    @dates = @cinema.timetables.select(:date).uniq.where('date >= ?', Date.current).limit(7).pluck(:date)
+    @dates = @cinema.timetables.select(:date).uniq.where('date >= ?', Date.current).order(date: :asc).limit(7).pluck(:date)
   end
 
   # GET /cinemas/new

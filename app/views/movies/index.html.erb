@@ -15,7 +15,7 @@
       <th>英文名</th>
       <th>年份</th>
       <% if is_admin? %>
-        <th colspan="2"></th>
+        <th colspan="3"></th>
       <% end %>
     </tr>
   </thead>
@@ -28,6 +28,7 @@
         <td><%= movie.alias %></td>
         <td><%= movie.year %></td>
         <% if is_admin? %>
+          <td><%= link_to '图片', movie_photos_path(movie) %></td>
           <td><%= link_to '编辑', edit_movie_path(movie) %></td>
           <td><%= link_to '删除', movie, method: :delete, data: { confirm: '确认删除？' } %></td>
         <% end %>
