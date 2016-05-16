@@ -113,7 +113,7 @@
                   <td><%= link_to tt.cinema.name, tt.cinema %></td>
                   <td><%= tt.date.strftime('%F') %></td>
                   <td class="text-right">
-                    <%= tts.map(&:time).minmax.map{|t|t.strftime('%T')}.join(' - ') %>
+                    <%= tts.map(&:time).minmax.uniq.map{|t|t.strftime('%T')}.join(' - ') %>
                     <% if is_admin? %>
                       <br>
                       <small><%= link_to "删除 #{tts.count} 个时间", timetables_by_cinema_movie_path(@movie, cinema_id: tt.cinema.id, date: date),
@@ -150,6 +150,7 @@
       var count = $('.movie-timetables .tab-pane.active tr[data-district="' + district + '"]').length;
       $('#timetables-districts').append('<li><a href data-district="' + district + '">' + district + ' (' + count + ')</a></li>');
     });
+    var saveDistrict = true;
     $(document).on('click', '#timetables-districts a', function (e) {
       e.preventDefault();
       var district = $(this).data('district');
@@ -161,14 +162,22 @@
         $(this).removeAttr('data-src');
       });
       preferredDistrict = district;
-      if (localStorage) {
+      if (saveDistrict && localStorage) {
         localStorage.selectedDistrict = district;
       }
     });
+    var clicked = false;
     if (preferredDistrict) {
-      $('#timetables-districts a[data-district="' + preferredDistrict + '"]').click();
-    } else {
+      var elem = $('#timetables-districts a[data-district="' + preferredDistrict + '"]');
+      if (elem.length > 0) {
+        elem.click();
+        clicked = true;
+      }
+    }
+    if (!clicked) {
+      saveDistrict = false;
       $('#timetables-districts a:first').click();
+      saveDistrict = true;
     }
   }
   $('.movie-timetable-date').on('shown.bs.tab', function (e) {

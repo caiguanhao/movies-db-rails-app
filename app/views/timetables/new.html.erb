@@ -13,7 +13,7 @@
 <%= bootstrap_form_for @timetable, url: movie_timetables_path(@movie), layout: :horizontal do |f| %>
   <%= f.date_select :date %>
   <%= f.time_select :time %>
-  <%= f.select :cinema_id, Cinema.all.collect { |c| [ c.name, c.id ] } %>
+  <%= f.select :cinema_id, grouped_options_for_select(Cinema.for_select(current_city)) %>
   <%= f.text_field :room %>
   <% Timetable::PRICE_PROVIDERS.each do |name, display_name| %>
     <%= f.number_field "prices[#{name}]", value: 0 %>
