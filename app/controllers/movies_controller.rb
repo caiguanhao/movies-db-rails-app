@@ -16,7 +16,7 @@ class MoviesController < ApplicationController
 
   # GET /movies/1
   def show
-    @dates = @movie.timetables.of_city(current_city).select(:date).uniq.where('date >= ?', Date.current).pluck(:date)
+    @dates = @movie.timetables.of_city(current_city).select(:date).uniq.where('date >= ?', Date.current).order(date: :asc).pluck(:date)
     @timetables_by_date = @dates.map{|date| @movie.timetables.includes(:cinema).where(date: date).order(cinema_id: :asc).group_by(&:cinema_id) }
     @comments = @movie.comments.order(updated_at: :desc)
     @comment = @movie.comments.where(user: current_user).first || @movie.comments.new
@@ -92,6 +92,11 @@ class MoviesController < ApplicationController
       flash[:error] = "无法删除影评。"
     end
     redirect_to movie_path(@movie, anchor: :comments)
+  end
+
+  def delete_timetables_by_cinema
+    @movie.timetables.where(cinema_id: params[:cinema_id]).where(date: params[:date]).delete_all
+    redirect_to movie_path(@movie, anchor: :cinemas)
   end
 
   def add_photos
