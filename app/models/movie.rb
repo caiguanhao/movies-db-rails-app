@@ -31,4 +31,13 @@ class Movie < ActiveRecord::Base
   def likes_with(like_type)
     Like.liking(self).where(like_type: like_type)
   end
+
+  def update_ratings!
+    _count = comments.count
+    _sum = comments.sum(:rating)
+    update_attributes({
+      ratings: _count > 0 ? _sum.to_f / _count.to_f : 0,
+      ratings_count: _count,
+    })
+  end
 end
