@@ -11,22 +11,14 @@ TYPES_MTIME = {
   'cover'        => 'cover',
 }
 
-IDS = {
-  '疯狂动物城'                  => 205222,
-  '美国队长3'                   => 209122,
-  '伦敦陷落'                    => 211903,
-  '愤怒的小鸟'                  => 200506,
-  '死侍'                        => 106309,
-  '蝙蝠侠大战超人：正义黎明'    => 203183,
-  '爱丽丝梦游仙境2：镜中奇遇记' => 207862,
-  '超脑48小时'                  => 216121,
-  '分歧者3：忠诚世界'           => 208256,
-}
+movies = File.read('db/seeds/movies.rb')
+
+IDS = movies.scan(/mtime_id: (\d+)/).flatten
 
 VAR = 'var imageList ='
 
-IDS.each do |moviename, movieid|
-  res = Net::HTTP.get(URI("http://movie.mtime.com/#{movieid}/posters_and_images/"))
+IDS.each do |id|
+  res = Net::HTTP.get(URI("http://movie.mtime.com/#{id}/posters_and_images/"))
   lines = res.lines
   lines.keep_if{ |line| line.include?(VAR) }
   raise 'incorrect cinemasJson matched' if lines.size != 1
@@ -38,7 +30,7 @@ IDS.each do |moviename, movieid|
   count = 0
 
   puts %{
-_id = Movie.find_by(name: '#{moviename}').id
+_id = Movie.find_by(mtime_id: '#{id}').id
 _tm = Time.current
 }
 
