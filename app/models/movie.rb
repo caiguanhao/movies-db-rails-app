@@ -4,6 +4,18 @@ class Movie < ActiveRecord::Base
   has_many :comments
   has_many :photos
 
+
+  ATTRS = {
+    star:         '主演',
+    director:     '导演',
+    writer:       '编剧',
+    country:      '国家',
+    release_date: '上映',
+    runtime:      '片长',
+    aka:          '又名',
+    genre:        '类型',
+  }
+
   LIKE_TYPES = {
     'wish'    => '想看',
     'watched' => '看过',

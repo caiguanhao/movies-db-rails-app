@@ -33,14 +33,11 @@
       <% end %>
     </h2>
     <h4><%= @movie.alias %></h4>
-    <p>主演：<%= @movie.star %></p>
-    <p>导演：<%= @movie.director %></p>
-    <p>编剧：<%= @movie.writer %></p>
-    <p>国家：<%= @movie.country %></p>
-    <p>上映：<%= @movie.release_date %></p>
-    <p>片长：<%= @movie.runtime %>分钟</p>
-    <p>又名：<%= @movie.aka %></p>
-    <p>类型：<%= @movie.genre %></p>
+    <% Movie::ATTRS.each do |key, display| %>
+      <% if not @movie[key].to_s.empty? %>
+        <p><%= display %>：<%= @movie[key] %></p>
+      <% end %>
+    <% end %>
     <%= simple_format @movie.content %>
     <% if @photos.count > 0 %>
       <div class="movie-photo-block">

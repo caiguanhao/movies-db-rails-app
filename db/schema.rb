@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160508075735) do
+ActiveRecord::Schema.define(version: 20160517010526) do
 
   create_table "cinemas", force: :cascade do |t|
     t.string   "name"
@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 20160508075735) do
     t.string   "release_date"
     t.decimal  "ratings",       precision: 3, scale: 2, default: 0.0
     t.integer  "ratings_count",                         default: 0
+    t.integer  "mtime_id"
   end
 
   create_table "photos", force: :cascade do |t|
