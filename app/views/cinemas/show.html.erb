@@ -1,5 +1,5 @@
 <div class="row cinema-header">
-  <div class="col-sm-6">
+  <div class="col-sm-9">
     <div class="pull-left cinema-logo">
       <%= image_tag @cinema.logo, width: 102, height: 44 %>
     </div>
@@ -17,7 +17,7 @@
       <h5><%= @cinema.city %> <%= @cinema.district %></h5>
     </div>
   </div>
-  <div class="col-sm-6 cinema-info">
+  <div class="col-sm-3 cinema-info">
     地址：<%= @cinema.address %><br>
     电话：<%= @cinema.phone %> 营业时间：<%= @cinema.business_hours %>
   </div>
@@ -71,7 +71,9 @@
                       <tr>
                         <td class="ctt-1">
                           <h3><%= t.time.strftime('%H:%M') %></h3>
-                          <span>预计<%= (t.time + tt.movie.runtime * 60).strftime('%H:%M') %>离场</span>
+                          <% if not tt.movie.runtime.nil? %>
+                            <span>预计<%= (t.time + tt.movie.runtime * 60).strftime('%H:%M') %>离场</span>
+                          <% end %>
                         </td>
                         <td class="ctt-2">
                           <span>3D<br>中文</span>
